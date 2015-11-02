@@ -11,19 +11,29 @@ import CoreData
 import Alamofire
 import SwiftyJSON
 
+
+extension String {
+    func makeChinesePheotic() -> String {
+        let mutableString = NSMutableString(string: self)
+        CFStringTransform(mutableString, nil, kCFStringTransformMandarinLatin, false)
+        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
+        let pinyin = mutableString as String
+        return pinyin
+    }
+}
+
 class ContactsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
     
-    var contacts:[Contacts] {
-        get {
-            let fetchedContact = fetchRequestController.fetchedObjects as! [Contacts]
-            return fetchedContact
-        }
-        
-        set {
-            self.contacts = newValue
-        }
-    }
+//    var contacts:[Contacts] {
+//        get {
+//            let fetchedContact = fetchRequestController.fetchedObjects as! [Contacts]
+//            return fetchedContact
+//        }
+//        set {
+//            self.contacts = newValue
+//        }
+//    }
     // fetch contacts data from native CoreData store
     var fetchRequestController : NSFetchedResultsController!
     // get userInfo
@@ -92,6 +102,7 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
     
     
     func filterContentForSearchText(searchText: String) {
+        let contacts = fetchRequestController.fetchedObjects as! [Contacts]
         searchResults = contacts.filter({ (person: Contacts) -> Bool in
             let nameMatch = person.name.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
             let phoneNumberMatch = person.phoneNumber.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
@@ -151,18 +162,31 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         tableView.beginUpdates()
     }
     
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .Insert:
+            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Delete:
+            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        default:
+            break
+        }
+    }
+    
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+//        tableView.reloadData()
         switch type {
         case .Insert:
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         case .Delete:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-        default:
-            tableView.reloadData()
+                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! ContactsTableViewCell
+                configureCell(cell, indexPath: indexPath!)
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
-        contacts = controller.fetchedObjects as! [Contacts]
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -212,7 +236,7 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
     
     func configureCell(cell: ContactsTableViewCell, indexPath: NSIndexPath) {
         let contact = fetchRequestController.objectAtIndexPath(indexPath) as! Contacts
-        
+
         cell.portraitImage.image = UIImage(named: "obama")
         cell.nameLabel.text = contact.name
         cell.sexImage.image = UIImage(named: "male")

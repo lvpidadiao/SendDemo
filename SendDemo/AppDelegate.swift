@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    let contactStore = CNContactStore()
+    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -24,10 +26,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func contactChanged(notification: NSNotification) {
-        print("i got some contacts changed")
-        print("\(notification)")
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(false, forKey: "isAddressBookStored")
+        let time = defaults.integerForKey("receiveContactChangeTimes")
+        if time == 1 {
+            print("i have change all the stuff")
+            defaults.setInteger(0, forKey: "receiveContactChangeTimes")
+        }
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+            let contactManipulator = ContactsManipulater()
+            let allContacts = contactManipulator.fetchAllContactsFromContactsStore()
+            
+            for contact in allContacts {
+                
+                //for debug
+                var flag = 0
+                let personName = CNContactFormatter.stringFromContact(contact, style: .FullName)
+                print("person name is \(personName)")
+                print("which identifier is \(contact.identifier)")
+                
+                let contactFromCoreData = contactManipulator.fetchOneContactForIdentifierForCoreData(contact.identifier)
+                if let comparedContact = contactFromCoreData {
+                    if comparedContact.name != personName{
+                        comparedContact.name = personName
+                        flag = 1
+                    }
+                    if comparedContact.portrait !== contact.imageData{
+                        comparedContact.portrait = contact.imageData
+                        flag = 1
+                    }
+                    var phoneNumber:String? = nil
+                    
+                    if contact.phoneNumbers.count > 0 {
+                        for phone in contact.phoneNumbers {
+                            phoneNumber = (phone.value as! CNPhoneNumber).stringValue
+                        }
+                    }
+                    else {
+                        phoneNumber = nil
+                    }
+                    if comparedContact.phoneNumber  != phoneNumber {
+                        comparedContact.phoneNumber = phoneNumber
+                        flag = 1
+                    }
+                    
+                    if comparedContact.personNameFirstLetter != contactManipulator.getStringFirstLetter(comparedContact.name){
+                        comparedContact.personNameFirstLetter = contactManipulator.getStringFirstLetter(comparedContact.name)
+                        flag = 1
+                    }
+                }
+                else {
+                    contactManipulator.insertNewContactsToCoreData(contact)
+                }
+                if flag == 1{
+                    contactManipulator.saveChanges()
+                }
+            }
+//        }
+        defaults.setInteger(1, forKey: "receiveContactChangeTimes")
         
     }
     

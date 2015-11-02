@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B221E361B4410BB0097EC27 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B221E351B4410BB0097EC27 /* PersonalViewController.swift */; };
+		3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E30231BE36C9300894070 /* ContactsManipulater.swift */; };
 		3B568ABA1B96F90300828B48 /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B568AB91B96F90300828B48 /* LoginInfo.swift */; };
 		3B61906D1B3955E4001B2B15 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */; };
 		3B72B9C61B14911900E2CE42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B72B9C51B14911900E2CE42 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 		0DA793932504A762B681D559 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB7DEFCB007B9E428814551 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		3B221E351B4410BB0097EC27 /* PersonalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
+		3B3E30231BE36C9300894070 /* ContactsManipulater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManipulater.swift; sourceTree = "<group>"; };
 		3B568AB91B96F90300828B48 /* LoginInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		3B72B9C01B14911900E2CE42 /* SendDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,8 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				3BF766D11BDDD78B00D8FE05 /* UIFile */,
-				3B72B9C51B14911900E2CE42 /* AppDelegate.swift */,
 				3B72B9C31B14911900E2CE42 /* Supporting Files */,
+				3B72B9C51B14911900E2CE42 /* AppDelegate.swift */,
 				3BB3A9F31B33E43900432105 /* ContactsTableViewController.swift */,
 				3BE7465A1BE0B33700787EBB /* LoginInScrollViewController.swift */,
 				3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */,
@@ -119,6 +121,7 @@
 				3B568AB91B96F90300828B48 /* LoginInfo.swift */,
 				3BF766D81BDE128E00D8FE05 /* ResultsTableViewController.swift */,
 				3BEAAEFA1BDF7371009EC129 /* MyselfTableViewController.swift */,
+				3B3E30231BE36C9300894070 /* ContactsManipulater.swift */,
 			);
 			path = SendDemo;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			files = (
 				3BB3A9F41B33E43900432105 /* ContactsTableViewController.swift in Sources */,
 				3BEAAEFB1BDF7372009EC129 /* MyselfTableViewController.swift in Sources */,
+				3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */,
 				3BE7465B1BE0B33700787EBB /* LoginInScrollViewController.swift in Sources */,
 				3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */,
 				3BF766D51BDE106700D8FE05 /* SearchResultsTableViewCell.swift in Sources */,

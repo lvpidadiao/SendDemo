@@ -19,5 +19,6 @@ class Contacts: NSManagedObject {
     @NSManaged var sex:NSNumber!
     @NSManaged var portrait:NSData!
     @NSManaged var personNameFirstLetter: String!
+    @NSManaged var identifier: String!
 }
 

@@ -18,7 +18,7 @@ import ContactsUI
 
 class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, UITextFieldDelegate {
     
-    let store = CNContactStore()
+    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).contactStore
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +84,7 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         for contact in allContacts {
             let personName = CNContactFormatter.stringFromContact(contact, style: .FullName)
             print("the person name is \(personName!)")
+            print("which identifier is \(contact.identifier)")
             var phoneNumber:String? = nil
             
             if contact.phoneNumbers.count > 0 {
@@ -104,10 +105,10 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
             people.isUpdate = false
             people.isBusy = false
             people.personNameFirstLetter = getStringFirstLetter(personName!)
+            people.identifier = contact.identifier
             
             do {
                 try managedObjectContext.save()
-                print("success")
             }
             catch {
                 print("\(error)")

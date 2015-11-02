@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F1021" minimumToolsVersion="Automatic">
     <entity name="Contacts" representedClassName="SendDemo.Contacts" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isBusy" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isUpdate" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="locaction" optional="YES" attributeType="String" syncable="YES"/>
@@ -11,6 +12,6 @@
         <attribute name="sex" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Contacts" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Contacts" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>
