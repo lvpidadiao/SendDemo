@@ -104,14 +104,14 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
     func filterContentForSearchText(searchText: String) {
         let contacts = fetchRequestController.fetchedObjects as! [Contacts]
         searchResults = contacts.filter({ (person: Contacts) -> Bool in
-            let nameMatch = person.name.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            let nameMatch = person.name.makeChinesePheotic().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
             let phoneNumberMatch = person.phoneNumber.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
             return nameMatch != nil || phoneNumberMatch != nil
         })
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchText = searchController.searchBar.text
+        let searchText = searchController.searchBar.text?.makeChinesePheotic()
         filterContentForSearchText(searchText!)
         
         let resultsController = searchController.searchResultsController as! ResultsTableViewController
