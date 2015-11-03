@@ -83,7 +83,7 @@
                 <outlet property="searchedResultsNameLabel" destination="dvd-rE-GFG" id="gP3-Z4-br0"/>
                 <outlet property="searchedResultsPhoneLabel" destination="LyO-eU-Mrm" id="oTa-xH-Jdp"/>
             </connections>
-            <point key="canvasLocation" x="671" y="216"/>
+            <point key="canvasLocation" x="493" y="176"/>
         </tableViewCell>
     </objects>
 </document>

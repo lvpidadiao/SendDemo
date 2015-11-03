@@ -9,7 +9,8 @@
 import UIKit
 
 class PersonalViewController: UIViewController {
-    
+    static let storyboardName = "Main"
+    static let viewControllerIdentifier = "PersonalViewController"
     
     @IBOutlet weak var personPortraitImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -26,6 +27,16 @@ class PersonalViewController: UIViewController {
         nameLabel.text = personalInfo.name
         companyLabel.text = personalInfo.phoneNumber
         personPortraitImage.image = UIImage(named: "obama")
+    }
+    
+    class func detailViewControllerForProduct(info: Contacts) -> PersonalViewController {
+        let storyboard = UIStoryboard(name: PersonalViewController.storyboardName, bundle: nil)
+        
+        let viewController = storyboard.instantiateViewControllerWithIdentifier(PersonalViewController.viewControllerIdentifier) as! PersonalViewController
+        
+        viewController.personalInfo = info
+        
+        return viewController
     }
 
     override func didReceiveMemoryWarning() {

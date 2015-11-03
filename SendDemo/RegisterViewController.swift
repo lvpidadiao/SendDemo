@@ -87,7 +87,7 @@ class RegisterViewController: UIViewController, NSURLSessionDataDelegate {
         }
         
         
-        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack.context
         
         for contact in allContacts {
             let personName = CNContactFormatter.stringFromContact(contact, style: .FullName)

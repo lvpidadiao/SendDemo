@@ -19,6 +19,7 @@
 		3B72B9DF1B14911900E2CE42 /* SendDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B72B9DE1B14911900E2CE42 /* SendDemoTests.swift */; };
 		3BB3A9F41B33E43900432105 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB3A9F31B33E43900432105 /* ContactsTableViewController.swift */; };
 		3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB3A9F51B33F20400432105 /* ContactsTableViewCell.swift */; };
+		3BDC72B51BE8A50B00282763 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDC72B41BE8A50B00282763 /* CoreDataStack.swift */; };
 		3BE7465B1BE0B33700787EBB /* LoginInScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE7465A1BE0B33700787EBB /* LoginInScrollViewController.swift */; };
 		3BEAAEFB1BDF7372009EC129 /* MyselfTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEAAEFA1BDF7371009EC129 /* MyselfTableViewController.swift */; };
 		3BEB2DB01B7F41D40017D21A /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEB2DAF1B7F41D40017D21A /* Contacts.swift */; };
@@ -58,6 +59,7 @@
 		3B72B9DE1B14911900E2CE42 /* SendDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDemoTests.swift; sourceTree = "<group>"; };
 		3BB3A9F31B33E43900432105 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		3BB3A9F51B33F20400432105 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
+		3BDC72B41BE8A50B00282763 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		3BE7465A1BE0B33700787EBB /* LoginInScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInScrollViewController.swift; sourceTree = "<group>"; };
 		3BEAAEFA1BDF7371009EC129 /* MyselfTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyselfTableViewController.swift; sourceTree = "<group>"; };
 		3BEB2DAF1B7F41D40017D21A /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				3BEB2DAF1B7F41D40017D21A /* Contacts.swift */,
 				3B72B9C71B14911900E2CE42 /* SendDemo.xcdatamodeld */,
 				3B72B9C41B14911900E2CE42 /* Info.plist */,
+				3BDC72B41BE8A50B00282763 /* CoreDataStack.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */,
 				3BF766D51BDE106700D8FE05 /* SearchResultsTableViewCell.swift in Sources */,
 				3BEB2DB01B7F41D40017D21A /* Contacts.swift in Sources */,
+				3BDC72B51BE8A50B00282763 /* CoreDataStack.swift in Sources */,
 				3BF766D91BDE128E00D8FE05 /* ResultsTableViewController.swift in Sources */,
 				3B61906D1B3955E4001B2B15 /* RegisterViewController.swift in Sources */,
 				3B72B9C91B14911900E2CE42 /* SendDemo.xcdatamodeld in Sources */,

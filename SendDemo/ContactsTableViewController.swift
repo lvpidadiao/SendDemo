@@ -24,17 +24,10 @@ extension String {
 
 class ContactsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
-    
-//    var contacts:[Contacts] {
-//        get {
-//            let fetchedContact = fetchRequestController.fetchedObjects as! [Contacts]
-//            return fetchedContact
-//        }
-//        set {
-//            self.contacts = newValue
-//        }
-//    }
     // fetch contacts data from native CoreData store
+    var coreDataStack:CoreDataStack = {
+            return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
+    }()
     var fetchRequestController : NSFetchedResultsController!
     // get userInfo
     var userLoginInfo:loginInfo = loginInfo()
@@ -56,7 +49,7 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let managedObjectContext = coreDataStack.context
         fetchRequestController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
         fetchRequestController.delegate = self
         
@@ -69,7 +62,9 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         
         // MARK: - Search controller implementation
         resultsTableController = ResultsTableViewController()
-        //resultsTableController.tableView.delegate = self
+        
+        // We want to be the delegate for our filtered table so didSelectRowAtIndexPath(_:) is called for both tables.
+        resultsTableController.tableView.delegate = self
         
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.sizeToFit()
@@ -157,7 +152,7 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         
     }
     
-    // when CoreData changed, update tableView
+    // MARK: - when CoreData changed, update tableView
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         tableView.beginUpdates()
     }
@@ -194,10 +189,6 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
     }
     
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
     
@@ -247,56 +238,36 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
 
     
     // MARK: hide Status Bar
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
+//    override func prefersStatusBarHidden() -> Bool {
+//        return true
+//    }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    //MARK: - ContactsTableView and ResultsTableView tableview delegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedPerson: Contacts
+        if tableView == self.tableView {
+            selectedPerson = fetchRequestController.objectAtIndexPath(indexPath) as! Contacts
+        }
+        else {
+            selectedPerson = resultsTableController.filteredContacts[indexPath.row]
+        }
+        
+        let pvc = PersonalViewController.detailViewControllerForProduct(selectedPerson)
+        pvc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(pvc, animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     
      //MARK: - Navigation
 
      //In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showPersonalInformation" {
-            if let indexPath = self.tableView?.indexPathForSelectedRow {
-                let destinationController = segue.destinationViewController as! PersonalViewController
-                destinationController.personalInfo = fetchRequestController.objectAtIndexPath(indexPath) as! Contacts
-                destinationController.hidesBottomBarWhenPushed = true
-            }
-        }
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "showPersonalInformation" {
+//            if let indexPath = self.tableView?.indexPathForSelectedRow {
+//                let destinationController = segue.destinationViewController as! PersonalViewController
+//                destinationController.personalInfo = fetchRequestController.objectAtIndexPath(indexPath) as! Contacts
+//                destinationController.hidesBottomBarWhenPushed = true
+//            }
+//        }
+//    }
 }

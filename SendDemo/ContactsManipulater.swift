@@ -13,7 +13,10 @@ import CoreData
 
 class ContactsManipulater {
     // MARK: - For user CoreData Contacts
-    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    var coreDataStack:CoreDataStack = {
+        return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
+    }()
+
     let fetchRequest = NSFetchRequest(entityName: "Contacts")
     
     
@@ -40,6 +43,7 @@ class ContactsManipulater {
     func fetchOneContactForIdentifierForCoreData(matchedString: String) -> Contacts? {
         fetchRequest.predicate = NSPredicate(format: "identifier == %@", matchedString)
         var result = [Contacts]()
+        let moc = coreDataStack.context
         do{
             result = try moc.executeFetchRequest(fetchRequest) as! [Contacts]
         }
@@ -56,7 +60,7 @@ class ContactsManipulater {
         fetchRequest.propertiesToFetch = property
         
         var properties = [String]()
-        
+        let moc = coreDataStack.context
         do {
             let result = try moc.executeFetchRequest(fetchRequest) as! [NSDictionary]
             result.forEach({ (dict) -> () in
@@ -78,36 +82,15 @@ class ContactsManipulater {
         return pinyin.substringWithRange(pinyin.startIndex...pinyin.startIndex).uppercaseString
     }
     
-    func convertChineseToPheoticLetter(s: String) -> String {
-        let mutableString = NSMutableString(string: s)
-        CFStringTransform(mutableString, nil, kCFStringTransformMandarinLatin, false)
-        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
-        let pinyin = mutableString as String
-        return pinyin
-    }
-    
     func insertNewContactsToCoreData(contact: CNContact) {
-        let person = NSEntityDescription.insertNewObjectForEntityForName("Contacts", inManagedObjectContext: moc) as! Contacts
+        let person = NSEntityDescription.insertNewObjectForEntityForName("Contacts", inManagedObjectContext: coreDataStack.context) as! Contacts
         person.name = CNContactFormatter.stringFromContact(contact, style: .FullName)
         person.isUpdate = false
         person.isBusy = false
         person.personNameFirstLetter = getStringFirstLetter(person.name)
         person.identifier = contact.identifier
         
-        saveChanges()
-    }
-    
-    
-    func saveChanges() {
-        if moc.hasChanges {
-            do {
-                try moc.save()
-            }
-            catch let error as NSError{
-                NSLog("Unresolved error \(error), \(error.userInfo)")
-                abort()
-            }
-        }
+        coreDataStack.saveContext()
     }
     
 }

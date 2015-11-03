@@ -19,6 +19,9 @@ import ContactsUI
 class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, UITextFieldDelegate {
     
     let store = (UIApplication.sharedApplication().delegate as! AppDelegate).contactStore
+    var coreDataStack:CoreDataStack = {
+        return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +82,7 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         }
         
         
-        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let managedObjectContext = coreDataStack.context
         
         for contact in allContacts {
             let personName = CNContactFormatter.stringFromContact(contact, style: .FullName)
@@ -237,8 +240,9 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         return true
     }
     @IBAction func clearInput(sender: UIButton) {
-        userName.text = ""
-        passWord.text = ""
+        userName.text?.removeAll()
+        passWord.text?.removeAll()
+        passWord.resignFirstResponder()
     }
 }
 

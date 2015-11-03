@@ -21,7 +21,8 @@ class ResultsTableViewController: UITableViewController {
         
         self.tableView.rowHeight = 80.0
         
-
+        tableView.dataSource = self
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -48,7 +49,7 @@ class ResultsTableViewController: UITableViewController {
     func configureCell(cell: SearchResultsTableViewCell, indexPath: NSIndexPath) {
         let contact = filteredContacts[indexPath.row]
         
-        cell.searchResultsImageView.image = UIImage(named: "shit")
+        cell.searchResultsImageView.image = UIImage(named: "obama")
         cell.searchedResultsNameLabel.text = contact.name
         cell.searchedResultsPhoneLabel.text = contact.phoneNumber
     }
