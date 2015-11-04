@@ -25,6 +25,7 @@ extension String {
 
 class ResultsTableViewController: UITableViewController,NSFetchedResultsControllerDelegate, UISearchBarDelegate,UISearchResultsUpdating {
 
+    var allContacts = [Contacts]()
     var filteredContacts = [Contacts]()
     
     var coreDataStack:CoreDataStack = {
@@ -48,11 +49,11 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
         
         do {
             try fetchRequestController.performFetch()
+            allContacts = fetchRequestController.fetchedObjects as! [Contacts]
         }
         catch {
             print(error)
         }
-        
         
         
         let nib = UINib(nibName: "SearchedTableCell", bundle: nil)
@@ -72,19 +73,55 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
     }
     
     func filterContentForSearchText(searchText: String) {
-            let fetchRequest = NSFetchRequest(entityName: "Contacts")
-            fetchRequest.propertiesToFetch = ["name","phoneNumber"]
-            fetchRequest.predicate = NSPredicate(format: "name CONTAINS[CD] %@ OR phoneNumber CONTAINS[cd] %@", searchText, searchText)
-            do {
-                filteredContacts =  try coreDataStack.context.executeFetchRequest(fetchRequest) as! [Contacts]
-            }
-            catch {
-                print(error)
-            }
+        let searchItems = searchText.componentsSeparatedByString(" ") as [String]
+        let andMatchPredicates: [NSPredicate] = searchItems.map { searchString in
+            
+            
+            var searchItemsPredicate = [NSPredicate]()
+            
+            let nameExpression = NSExpression(forKeyPath: "name")
+            let searchStringExpression = NSExpression(forConstantValue: searchString)
+            
+            let nameSearchComparisonPredicate = NSComparisonPredicate(leftExpression: nameExpression, rightExpression: searchStringExpression, modifier: .DirectPredicateModifier, type: .ContainsPredicateOperatorType, options: .CaseInsensitivePredicateOption)
+            
+            searchItemsPredicate.append(nameSearchComparisonPredicate)
+            
+            // this below code is for compare Int value not String
+//            let numberFormatter = NSNumberFormatter()
+//            numberFormatter.numberStyle = .NoStyle
+//            numberFormatter.formatterBehavior = .BehaviorDefault
+//            
+//            let targetNumber = numberFormatter.numberFromString(searchString)
+            
+            // `searchString` may fail to convert to a number.
+            // Use `targetNumberExpression` in both the following predicates.
+            let phoneNumberExpression = NSExpression(forKeyPath: "phoneNumber")
+            let phoneNumberPredicate = NSComparisonPredicate(leftExpression: phoneNumberExpression, rightExpression: searchStringExpression, modifier: .DirectPredicateModifier, type: .ContainsPredicateOperatorType, options: .CaseInsensitivePredicateOption)
+            
+            searchItemsPredicate.append(phoneNumberPredicate)
+                
+                // TODO: renaming
+                // `price` field matching.
+//                let lhs = NSExpression(forKeyPath: "introPrice")
+//                
+//                let finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: targetNumberExpression, modifier: .DirectPredicateModifier, type: .EqualToPredicateOperatorType, options: .CaseInsensitivePredicateOption)
+//                
+//                searchItemsPredicate.append(finalPredicate)
+            
+            let orMatchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: searchItemsPredicate)
+            
+            return orMatchPredicate
+        }
+        
+        let finalCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: andMatchPredicates)
+        
+        filteredContacts = allContacts.filter(){finalCompoundPredicate.evaluateWithObject($0)}
+        
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchText = searchController.searchBar.text?.makeChinesePheotic()
+        let whitespaceCharacterSet = NSCharacterSet.whitespaceCharacterSet()
+        let searchText = searchController.searchBar.text?.stringByTrimmingCharactersInSet(whitespaceCharacterSet)
         filterContentForSearchText(searchText!)
         tableView.reloadData()
     }

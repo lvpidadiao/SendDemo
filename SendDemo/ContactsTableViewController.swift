@@ -50,6 +50,7 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
             print(error)
         }
         
+        let customHeaderView = UIView(frame: CGRectMake(0, 0, 320, 44))
         // MARK: - Search controller implementation
         resultsTableController = ResultsTableViewController()
         
@@ -58,11 +59,15 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.sizeToFit()
-        tableView.tableHeaderView = searchController.searchBar
-        searchController.searchBar.delegate = resultsTableController
-       
         
+        customHeaderView.addSubview(searchController.searchBar)
+        tableView.tableHeaderView = customHeaderView
+        tableView.bringSubviewToFront(customHeaderView)
+        // make the searchupdating and searchbar delegate to resultsTableController
+        searchController.searchBar.delegate = resultsTableController
         searchController.searchResultsUpdater = resultsTableController
+        searchController.searchBar.placeholder = "Hello Loser"
+        
         searchController.dimsBackgroundDuringPresentation = false
         
         definesPresentationContext = true
@@ -82,31 +87,6 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         getMyFriendsFromServer()
         print("we have post data to server")
     }
-    
-    // MARK: - 所有关于search的代码
-    
-    
-//    func filterContentForSearchText(searchText: String) {
-//        let contacts = fetchRequestController.fetchedObjects as! [Contacts]
-//        searchResults = contacts.filter({ (person: Contacts) -> Bool in
-//            let nameMatch = person.name.makeChinesePheotic().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
-//            let phoneNumberMatch = person.phoneNumber?.makeChinesePheotic().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
-//            return nameMatch != nil || phoneNumberMatch != nil
-//        })
-//    }
-//    
-//    func updateSearchResultsForSearchController(searchController: UISearchController) {
-//        let searchText = searchController.searchBar.text?.makeChinesePheotic()
-//        filterContentForSearchText(searchText!)
-//        
-//        let resultsController = searchController.searchResultsController as! ResultsTableViewController
-//        resultsController.filteredContacts = searchResults
-//        resultsController.tableView.reloadData()
-//    }
-//    
-//    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-//        searchBar.resignFirstResponder()
-//    }
     
     func getMyFriendsFromServer() {
         let defaults = NSUserDefaults.standardUserDefaults()
