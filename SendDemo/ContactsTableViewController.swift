@@ -12,17 +12,7 @@ import Alamofire
 import SwiftyJSON
 
 
-extension String {
-    func makeChinesePheotic() -> String {
-        let mutableString = NSMutableString(string: self)
-        CFStringTransform(mutableString, nil, kCFStringTransformMandarinLatin, false)
-        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
-        let pinyin = mutableString as String
-        return pinyin
-    }
-}
-
-class ContactsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+class ContactsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     // fetch contacts data from native CoreData store
     var coreDataStack:CoreDataStack = {
@@ -34,7 +24,7 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
     // search controller
     var searchController:UISearchController!
     
-    var searchResults:[Contacts] = []
+//    var searchResults:[Contacts] = []
     
     var resultsTableController: ResultsTableViewController!
     
@@ -69,10 +59,10 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.sizeToFit()
         tableView.tableHeaderView = searchController.searchBar
-        searchController.searchBar.delegate = self
+        searchController.searchBar.delegate = resultsTableController
        
         
-        searchController.searchResultsUpdater = self
+        searchController.searchResultsUpdater = resultsTableController
         searchController.dimsBackgroundDuringPresentation = false
         
         definesPresentationContext = true
@@ -96,27 +86,27 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
     // MARK: - 所有关于search的代码
     
     
-    func filterContentForSearchText(searchText: String) {
-        let contacts = fetchRequestController.fetchedObjects as! [Contacts]
-        searchResults = contacts.filter({ (person: Contacts) -> Bool in
-            let nameMatch = person.name.makeChinesePheotic().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
-            let phoneNumberMatch = person.phoneNumber.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
-            return nameMatch != nil || phoneNumberMatch != nil
-        })
-    }
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchText = searchController.searchBar.text?.makeChinesePheotic()
-        filterContentForSearchText(searchText!)
-        
-        let resultsController = searchController.searchResultsController as! ResultsTableViewController
-        resultsController.filteredContacts = searchResults
-        resultsController.tableView.reloadData()
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
+//    func filterContentForSearchText(searchText: String) {
+//        let contacts = fetchRequestController.fetchedObjects as! [Contacts]
+//        searchResults = contacts.filter({ (person: Contacts) -> Bool in
+//            let nameMatch = person.name.makeChinesePheotic().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+//            let phoneNumberMatch = person.phoneNumber?.makeChinesePheotic().rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+//            return nameMatch != nil || phoneNumberMatch != nil
+//        })
+//    }
+//    
+//    func updateSearchResultsForSearchController(searchController: UISearchController) {
+//        let searchText = searchController.searchBar.text?.makeChinesePheotic()
+//        filterContentForSearchText(searchText!)
+//        
+//        let resultsController = searchController.searchResultsController as! ResultsTableViewController
+//        resultsController.filteredContacts = searchResults
+//        resultsController.tableView.reloadData()
+//    }
+//    
+//    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+//        searchBar.resignFirstResponder()
+//    }
     
     func getMyFriendsFromServer() {
         let defaults = NSUserDefaults.standardUserDefaults()
