@@ -21,8 +21,8 @@
 		3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB3A9F51B33F20400432105 /* ContactsTableViewCell.swift */; };
 		3BDC72B51BE8A50B00282763 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDC72B41BE8A50B00282763 /* CoreDataStack.swift */; };
 		3BDC72B71BEA0BBE00282763 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BDC72B61BEA0BBE00282763 /* QuartzCore.framework */; };
+		3BDC72E21BEB058400282763 /* MyselfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDC72E11BEB058400282763 /* MyselfViewController.swift */; };
 		3BE7465B1BE0B33700787EBB /* LoginInScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE7465A1BE0B33700787EBB /* LoginInScrollViewController.swift */; };
-		3BEAAEFB1BDF7372009EC129 /* MyselfTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEAAEFA1BDF7371009EC129 /* MyselfTableViewController.swift */; };
 		3BEB2DB01B7F41D40017D21A /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEB2DAF1B7F41D40017D21A /* Contacts.swift */; };
 		3BF766D31BDDD80300D8FE05 /* SearchedTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF766D21BDDD80300D8FE05 /* SearchedTableCell.xib */; };
 		3BF766D51BDE106700D8FE05 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF766D41BDE106700D8FE05 /* SearchResultsTableViewCell.swift */; };
@@ -62,8 +62,8 @@
 		3BB3A9F51B33F20400432105 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		3BDC72B41BE8A50B00282763 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		3BDC72B61BEA0BBE00282763 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3BDC72E11BEB058400282763 /* MyselfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyselfViewController.swift; sourceTree = "<group>"; };
 		3BE7465A1BE0B33700787EBB /* LoginInScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInScrollViewController.swift; sourceTree = "<group>"; };
-		3BEAAEFA1BDF7371009EC129 /* MyselfTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyselfTableViewController.swift; sourceTree = "<group>"; };
 		3BEB2DAF1B7F41D40017D21A /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		3BF766D21BDDD80300D8FE05 /* SearchedTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchedTableCell.xib; sourceTree = "<group>"; };
 		3BF766D41BDE106700D8FE05 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
@@ -125,8 +125,8 @@
 				3B221E351B4410BB0097EC27 /* PersonalViewController.swift */,
 				3B568AB91B96F90300828B48 /* LoginInfo.swift */,
 				3BF766D81BDE128E00D8FE05 /* ResultsTableViewController.swift */,
-				3BEAAEFA1BDF7371009EC129 /* MyselfTableViewController.swift */,
 				3B3E30231BE36C9300894070 /* ContactsManipulater.swift */,
+				3BDC72E11BEB058400282763 /* MyselfViewController.swift */,
 			);
 			path = SendDemo;
 			sourceTree = "<group>";
@@ -346,12 +346,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BB3A9F41B33E43900432105 /* ContactsTableViewController.swift in Sources */,
-				3BEAAEFB1BDF7372009EC129 /* MyselfTableViewController.swift in Sources */,
 				3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */,
 				3BE7465B1BE0B33700787EBB /* LoginInScrollViewController.swift in Sources */,
 				3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */,
 				3BF766D51BDE106700D8FE05 /* SearchResultsTableViewCell.swift in Sources */,
 				3BEB2DB01B7F41D40017D21A /* Contacts.swift in Sources */,
+				3BDC72E21BEB058400282763 /* MyselfViewController.swift in Sources */,
 				3BDC72B51BE8A50B00282763 /* CoreDataStack.swift in Sources */,
 				3BF766D91BDE128E00D8FE05 /* ResultsTableViewController.swift in Sources */,
 				3B61906D1B3955E4001B2B15 /* RegisterViewController.swift in Sources */,
