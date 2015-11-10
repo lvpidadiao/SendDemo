@@ -11,7 +11,7 @@ import CoreData
 import Alamofire
 import SwiftyJSON
 
-class MainContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate
+class MainContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, MJNIndexViewDataSource
 {
 
     @IBOutlet weak var tableView: UITableView!
@@ -19,37 +19,62 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     var coreDataStack:CoreDataStack = {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
     }()
-    var fetchRequestController : NSFetchedResultsController!
+    var fetchRequestController : NSFetchedResultsController {
+        let fetchRequest = NSFetchRequest(entityName: "Contacts")
+        let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack.context
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
+        frc.delegate = self
+        
+        do {
+            try frc.performFetch()
+        }
+        catch {
+            print(error)
+        }
+        return frc
+        
+    }
+    
     // get userInfo
     var userLoginInfo:loginInfo = loginInfo()
     // search controller
     var searchController:UISearchController!
     
-    //    var searchResults:[Contacts] = []
+    var indexTitle = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     
     var resultsTableController: ResultsTableViewController!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // configure MJNIndexView
+        let indexView = MJNIndexView(frame: view.bounds)
+        indexView.dataSource = self
+        indexView.backgroundColor = UIColor.clearColor()
+        indexView.fontColor = UIColor.blueColor()
+        indexView.font = indexView.font.fontWithSize(13)
         
+        view.addSubview(indexView)
+        
+        // configure coredata data
         self.tableView.estimatedRowHeight = 80.0
-        
-        let fetchRequest = NSFetchRequest(entityName: "Contacts")
-        let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        let managedObjectContext = coreDataStack.context
-        fetchRequestController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
-        fetchRequestController.delegate = self
-        
-        do {
-            try fetchRequestController.performFetch()
-        }
-        catch {
-            print(error)
-        }
+
+//        let fetchRequest = NSFetchRequest(entityName: "Contacts")
+//        let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
+//        fetchRequest.sortDescriptors = [sortDescriptor]
+//        
+//        let managedObjectContext = coreDataStack.context
+//        fetchRequestController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
+//        fetchRequestController.delegate = self
+//        
+//        do {
+//            try fetchRequestController.performFetch()
+//        }
+//        catch {
+//            print(error)
+//        }
         
         let customHeaderView = UIView(frame: CGRectMake(0, 0, 320, 44))
         // MARK: - Search controller implementation
@@ -174,10 +199,10 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         return sectionInfo.name
     }
     
-    
-    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
-        return fetchRequestController.sectionIndexTitles
-    }
+    // indexBar
+//    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+//        return fetchRequestController.sectionIndexTitles
+//    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
@@ -215,6 +240,16 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
+    // MARK: - MJNIndexTableIndexBar datasource
+    
+    func sectionIndexTitlesForMJNIndexView(indexView: MJNIndexView!) -> [AnyObject]! {
+
+        return fetchRequestController.sectionIndexTitles
+    }
+    
+    func sectionForSectionMJNIndexTitle(title: String!, atIndex index: Int) {
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: index), atScrollPosition: .Top, animated: true)
+    }
     // MARK: hide Status Bar
     //    override func prefersStatusBarHidden() -> Bool {
     //        return true

@@ -11,6 +11,7 @@
 		3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E30231BE36C9300894070 /* ContactsManipulater.swift */; };
 		3B568ABA1B96F90300828B48 /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B568AB91B96F90300828B48 /* LoginInfo.swift */; };
 		3B5F687B1BF218C900043FAE /* MainContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F687A1BF218C900043FAE /* MainContactsViewController.swift */; };
+		3B5F68801BF2219D00043FAE /* MJNIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F687F1BF2219D00043FAE /* MJNIndexView.m */; };
 		3B61906D1B3955E4001B2B15 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */; };
 		3B72B9C61B14911900E2CE42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B72B9C51B14911900E2CE42 /* AppDelegate.swift */; };
 		3B72B9C91B14911900E2CE42 /* SendDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3B72B9C71B14911900E2CE42 /* SendDemo.xcdatamodeld */; };
@@ -48,6 +49,9 @@
 		3B3E30231BE36C9300894070 /* ContactsManipulater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManipulater.swift; sourceTree = "<group>"; };
 		3B568AB91B96F90300828B48 /* LoginInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		3B5F687A1BF218C900043FAE /* MainContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContactsViewController.swift; sourceTree = "<group>"; };
+		3B5F687D1BF2219D00043FAE /* SendDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SendDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		3B5F687E1BF2219D00043FAE /* MJNIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJNIndexView.h; sourceTree = "<group>"; };
+		3B5F687F1BF2219D00043FAE /* MJNIndexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJNIndexView.m; sourceTree = "<group>"; };
 		3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		3B72B9C01B14911900E2CE42 /* SendDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B72B9C41B14911900E2CE42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,6 +97,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B5F687C1BF2218B00043FAE /* MJNIndex */ = {
+			isa = PBXGroup;
+			children = (
+				3B5F687E1BF2219D00043FAE /* MJNIndexView.h */,
+				3B5F687F1BF2219D00043FAE /* MJNIndexView.m */,
+				3B5F687D1BF2219D00043FAE /* SendDemo-Bridging-Header.h */,
+			);
+			name = MJNIndex;
+			sourceTree = "<group>";
+		};
 		3B72B9B71B14911900E2CE42 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +130,7 @@
 		3B72B9C21B14911900E2CE42 /* SendDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3B5F687C1BF2218B00043FAE /* MJNIndex */,
 				3B72B9C31B14911900E2CE42 /* Supporting Files */,
 				3BF766D11BDDD78B00D8FE05 /* UIFile */,
 				3B72B9C51B14911900E2CE42 /* AppDelegate.swift */,
@@ -238,7 +253,7 @@
 		3B72B9B81B14911900E2CE42 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = ProfessorTrevor;
 				TargetAttributes = {
@@ -345,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B5F68801BF2219D00043FAE /* MJNIndexView.m in Sources */,
 				3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */,
 				3BE7465B1BE0B33700787EBB /* LoginInScrollViewController.swift in Sources */,
 				3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */,
@@ -487,6 +503,7 @@
 			baseConfigurationReference = B747AC8FB674CB3F76AEE90B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SendDemo/Info.plist;
@@ -494,6 +511,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "qktz.co.ceo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SendDemo/SendDemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -503,6 +522,7 @@
 			baseConfigurationReference = 1CB7DEFCB007B9E428814551 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SendDemo/Info.plist;
@@ -510,6 +530,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "qktz.co.ceo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SendDemo/SendDemo-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
