@@ -33,7 +33,10 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         userName.delegate = self
+        passWord.delegate = self
+        
         let authorizationStatus = CNContactStore.authorizationStatusForEntityType(CNEntityType.Contacts)
         switch authorizationStatus {
         case .Denied, .Restricted:
@@ -236,7 +239,12 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        passWord.becomeFirstResponder()
+        if textField === userName {
+            passWord.becomeFirstResponder()
+        }
+        else {
+            performSegueWithIdentifier("loginToTabBarControllerSegue", sender: nil)
+        }
         return true
     }
     @IBAction func clearInput(sender: UIButton) {
