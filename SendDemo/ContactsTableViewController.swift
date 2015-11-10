@@ -75,6 +75,12 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         print("in Contacts View Controller password: \(userLoginInfo.passWord)")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+        
+        tableView.sectionIndexBackgroundColor = UIColor.clearColor()
+        
+//      通过tag寻找view
+//        tableView.viewWithTag(10)
+        
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
@@ -201,7 +207,8 @@ class ContactsTableViewController: UITableViewController, NSFetchedResultsContro
         cell.portraitImage.image = UIImage(named: "obama")
         cell.nameLabel.text = contact.name
         cell.sexImage.image = UIImage(named: "male")
-        cell.isBusyImage.image = UIImage(named: "moon")
+        cell.isBusyImage.image = contact.isBusy == true ? UIImage(named: "busy") : UIImage(named: "coffee")
+        cell.isUpdateImage.image = contact.isUpdate == true ? UIImage(named: "updateAlert") : UIImage(named: "notUpdateAlert")
         cell.phoneNumberLabel.text = contact.phoneNumber
         
     }
