@@ -221,6 +221,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     //    }
     
     //MARK: - ContactsTableView and ResultsTableView tableview delegate
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedPerson: Contacts
         if tableView == self.tableView {
