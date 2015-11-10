@@ -287,7 +287,7 @@ class RegisterViewController: UIViewController, NSURLSessionDataDelegate {
             }
             
             
-            if let contactVC = destination as? ContactsTableViewController {
+            if let contactVC = destination as? MainContactsViewController {
                 contactVC.userLoginInfo.userName = userName.text
                 contactVC.userLoginInfo.passWord = passWord.text
             }
