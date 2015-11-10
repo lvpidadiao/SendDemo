@@ -51,30 +51,11 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         // configure MJNIndexView
         let indexView = MJNIndexView(frame: view.bounds)
-        indexView.dataSource = self
-        indexView.backgroundColor = UIColor.clearColor()
-        indexView.fontColor = UIColor.blueColor()
-        indexView.font = indexView.font.fontWithSize(13)
-        
+        configureMJNIndexView(indexView)
         view.addSubview(indexView)
         
         // configure coredata data
         self.tableView.estimatedRowHeight = 80.0
-
-//        let fetchRequest = NSFetchRequest(entityName: "Contacts")
-//        let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//        
-//        let managedObjectContext = coreDataStack.context
-//        fetchRequestController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
-//        fetchRequestController.delegate = self
-//        
-//        do {
-//            try fetchRequestController.performFetch()
-//        }
-//        catch {
-//            print(error)
-//        }
         
         let customHeaderView = UIView(frame: CGRectMake(0, 0, 320, 44))
         // MARK: - Search controller implementation
@@ -110,6 +91,14 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func configureMJNIndexView(indexView: MJNIndexView) -> Void
+    {
+        indexView.dataSource = self
+        indexView.fontColor = UIColor.redColor()
+        indexView.selectedItemFontColor = UIColor.purpleColor()
+        indexView.font = indexView.font.fontWithSize(13)
     }
     
     
