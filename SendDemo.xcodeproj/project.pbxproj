@@ -10,6 +10,7 @@
 		3B221E361B4410BB0097EC27 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B221E351B4410BB0097EC27 /* PersonalViewController.swift */; };
 		3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E30231BE36C9300894070 /* ContactsManipulater.swift */; };
 		3B568ABA1B96F90300828B48 /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B568AB91B96F90300828B48 /* LoginInfo.swift */; };
+		3B5F687B1BF218C900043FAE /* MainContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F687A1BF218C900043FAE /* MainContactsViewController.swift */; };
 		3B61906D1B3955E4001B2B15 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */; };
 		3B72B9C61B14911900E2CE42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B72B9C51B14911900E2CE42 /* AppDelegate.swift */; };
 		3B72B9C91B14911900E2CE42 /* SendDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3B72B9C71B14911900E2CE42 /* SendDemo.xcdatamodeld */; };
@@ -17,7 +18,6 @@
 		3B72B9D01B14911900E2CE42 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B72B9CF1B14911900E2CE42 /* Images.xcassets */; };
 		3B72B9D31B14911900E2CE42 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B72B9D11B14911900E2CE42 /* LaunchScreen.xib */; };
 		3B72B9DF1B14911900E2CE42 /* SendDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B72B9DE1B14911900E2CE42 /* SendDemoTests.swift */; };
-		3BB3A9F41B33E43900432105 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB3A9F31B33E43900432105 /* ContactsTableViewController.swift */; };
 		3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB3A9F51B33F20400432105 /* ContactsTableViewCell.swift */; };
 		3BDC72B51BE8A50B00282763 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDC72B41BE8A50B00282763 /* CoreDataStack.swift */; };
 		3BDC72B71BEA0BBE00282763 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BDC72B61BEA0BBE00282763 /* QuartzCore.framework */; };
@@ -47,6 +47,7 @@
 		3B221E351B4410BB0097EC27 /* PersonalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
 		3B3E30231BE36C9300894070 /* ContactsManipulater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManipulater.swift; sourceTree = "<group>"; };
 		3B568AB91B96F90300828B48 /* LoginInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
+		3B5F687A1BF218C900043FAE /* MainContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContactsViewController.swift; sourceTree = "<group>"; };
 		3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		3B72B9C01B14911900E2CE42 /* SendDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B72B9C41B14911900E2CE42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		3B72B9D81B14911900E2CE42 /* SendDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SendDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B72B9DD1B14911900E2CE42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B72B9DE1B14911900E2CE42 /* SendDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDemoTests.swift; sourceTree = "<group>"; };
-		3BB3A9F31B33E43900432105 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		3BB3A9F51B33F20400432105 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		3BDC72B41BE8A50B00282763 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		3BDC72B61BEA0BBE00282763 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -116,10 +116,10 @@
 		3B72B9C21B14911900E2CE42 /* SendDemo */ = {
 			isa = PBXGroup;
 			children = (
-				3BF766D11BDDD78B00D8FE05 /* UIFile */,
 				3B72B9C31B14911900E2CE42 /* Supporting Files */,
+				3BF766D11BDDD78B00D8FE05 /* UIFile */,
 				3B72B9C51B14911900E2CE42 /* AppDelegate.swift */,
-				3BB3A9F31B33E43900432105 /* ContactsTableViewController.swift */,
+				3B5F687A1BF218C900043FAE /* MainContactsViewController.swift */,
 				3BE7465A1BE0B33700787EBB /* LoginInScrollViewController.swift */,
 				3B61906C1B3955E4001B2B15 /* RegisterViewController.swift */,
 				3B221E351B4410BB0097EC27 /* PersonalViewController.swift */,
@@ -345,7 +345,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BB3A9F41B33E43900432105 /* ContactsTableViewController.swift in Sources */,
 				3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */,
 				3BE7465B1BE0B33700787EBB /* LoginInScrollViewController.swift in Sources */,
 				3BB3A9F61B33F20400432105 /* ContactsTableViewCell.swift in Sources */,
@@ -358,6 +357,7 @@
 				3B72B9C91B14911900E2CE42 /* SendDemo.xcdatamodeld in Sources */,
 				3B72B9C61B14911900E2CE42 /* AppDelegate.swift in Sources */,
 				3B221E361B4410BB0097EC27 /* PersonalViewController.swift in Sources */,
+				3B5F687B1BF218C900043FAE /* MainContactsViewController.swift in Sources */,
 				3B568ABA1B96F90300828B48 /* LoginInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
