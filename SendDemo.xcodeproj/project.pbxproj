@@ -36,6 +36,7 @@
 		3BF26CC11BF34D74008F5638 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF26CB91BF34D74008F5638 /* ALView+PureLayout.m */; };
 		3BF26CC21BF34D74008F5638 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF26CBB1BF34D74008F5638 /* NSArray+PureLayout.m */; };
 		3BF26CC31BF34D74008F5638 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF26CBD1BF34D74008F5638 /* NSLayoutConstraint+PureLayout.m */; };
+		3BF26CC61BF391D1008F5638 /* MainContactsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF26CC51BF391D1008F5638 /* MainContactsTableCell.xib */; };
 		3BF766D31BDDD80300D8FE05 /* SearchedTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF766D21BDDD80300D8FE05 /* SearchedTableCell.xib */; };
 		3BF766D51BDE106700D8FE05 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF766D41BDE106700D8FE05 /* SearchResultsTableViewCell.swift */; };
 		3BF766D91BDE128E00D8FE05 /* ResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF766D81BDE128E00D8FE05 /* ResultsTableViewController.swift */; };
@@ -97,6 +98,7 @@
 		3BF26CBE1BF34D74008F5638 /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		3BF26CBF1BF34D74008F5638 /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		3BF26CC01BF34D74008F5638 /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
+		3BF26CC51BF391D1008F5638 /* MainContactsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainContactsTableCell.xib; sourceTree = "<group>"; };
 		3BF766D21BDDD80300D8FE05 /* SearchedTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchedTableCell.xib; sourceTree = "<group>"; };
 		3BF766D41BDE106700D8FE05 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		3BF766D81BDE128E00D8FE05 /* ResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				3B72B9D11B14911900E2CE42 /* LaunchScreen.xib */,
 				3B72B9CF1B14911900E2CE42 /* Images.xcassets */,
 				3B72B9CC1B14911900E2CE42 /* Main.storyboard */,
+				3BF26CC51BF391D1008F5638 /* MainContactsTableCell.xib */,
 				3BB3A9F51B33F20400432105 /* ContactsTableViewCell.swift */,
 				3BF766D21BDDD80300D8FE05 /* SearchedTableCell.xib */,
 				3BF766D41BDE106700D8FE05 /* SearchResultsTableViewCell.swift */,
@@ -361,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BF766D31BDDD80300D8FE05 /* SearchedTableCell.xib in Resources */,
+				3BF26CC61BF391D1008F5638 /* MainContactsTableCell.xib in Resources */,
 				3B72B9CE1B14911900E2CE42 /* Main.storyboard in Resources */,
 				3B72B9D31B14911900E2CE42 /* LaunchScreen.xib in Resources */,
 				3B72B9D01B14911900E2CE42 /* Images.xcassets in Resources */,

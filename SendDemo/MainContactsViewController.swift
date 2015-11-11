@@ -59,6 +59,9 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         self.view.backgroundColor = UIColor.blue
         tableView = ContactsTableView(frame: self.view.bounds, style: .Plain)
         self.tableView.estimatedRowHeight = 80.0
+
+        let nib = UINib(nibName: "MainContactsTableCell", bundle: nil)
+        tableView.registerNib(nib, forCellReuseIdentifier: "mainCell")
         configurePullToBounceView(tableView)
         
         // configure MJNIndexView
@@ -94,11 +97,15 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     func configurePullToBounceView(tableView: ContactsTableView){
         let bodyView = UIView()
         bodyView.frame = self.view.frame
-        bodyView.frame.origin.y += 20 + 44
-        self.view.addSubview(bodyView)
+        bodyView.backgroundColor = UIColor.redColor()
+        bodyView.frame.y += 20 + 44
+        bodyView.frame.height -= 20 + 44
+//        tableView.frame.height = bodyView.frame.height - 30
+//        self.view.addSubview(bodyView)
+        tableView.frame.y += (self.navigationController?.navigationBar.frame.height)!
         tableView.delegate = self
         tableView.dataSource = self
-
+    
         let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
 
         bodyView.addSubview(tableViewWrapper)
@@ -109,7 +116,8 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
                 self.indexView.hidden = false
             }
         }
-        self.view.addSubview(bodyView)
+    
+        self.view.addSubview(tableViewWrapper)
     }
     
     func configureMJNIndexView(indexView: MJNIndexView) -> Void
@@ -189,7 +197,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         case .Delete:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            let cell = tableView.cellForRowAtIndexPath(indexPath!) as! PureCodeTableViewCell
+            let cell = tableView.cellForRowAtIndexPath(indexPath!) as! ContactsTableViewCell
             configureCell(cell, indexPath: indexPath!)
         case .Move:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
@@ -229,7 +237,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PureContactCell", forIndexPath: indexPath) as! PureCodeTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("mainCell", forIndexPath: indexPath) as! ContactsTableViewCell
         
         
         configureCell(cell, indexPath: indexPath)
@@ -237,7 +245,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
-    func configureCell(cell: PureCodeTableViewCell, indexPath: NSIndexPath) {
+    func configureCell(cell: ContactsTableViewCell, indexPath: NSIndexPath) {
         let contact = fetchRequestController.objectAtIndexPath(indexPath) as! Contacts
         
         cell.portraitImage.image = UIImage(named: "obama")
