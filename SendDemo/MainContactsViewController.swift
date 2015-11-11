@@ -16,7 +16,6 @@ import PullToBounce
 class MainContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, MJNIndexViewDataSource
 {
 
-    @IBOutlet weak var tableView: UITableView!
     // fetch contacts data from native CoreData store
     var coreDataStack:CoreDataStack = {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
@@ -49,19 +48,23 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     var resultsTableController: ResultsTableViewController!
     
+    var tableView: ContactsTableView!
+    
+    var indexView: MJNIndexView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // configure MJNIndexView
-        let indexView = MJNIndexView(frame: view.bounds)
-        configureMJNIndexView(indexView)
-        view.addSubview(indexView)
-        view.bringSubviewToFront(indexView)
-        
-        // configure coredata data
+        // configure tableView and PullToBounce TableView
+        self.view.backgroundColor = UIColor.blue
+        tableView = ContactsTableView(frame: self.view.bounds, style: .Plain)
         self.tableView.estimatedRowHeight = 80.0
+        configurePullToBounceView(tableView)
         
-        let customHeaderView = UIView(frame: CGRectMake(0, 0, 320, 44))
+        // configure MJNIndexView
+        indexView = MJNIndexView(frame: view.bounds)
+        configureMJNIndexView(indexView)
+
         // MARK: - Search controller implementation
         resultsTableController = ResultsTableViewController()
         
@@ -70,14 +73,12 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.sizeToFit()
-        
-        customHeaderView.addSubview(searchController.searchBar)
-        tableView.tableHeaderView = customHeaderView
-        tableView.bringSubviewToFront(customHeaderView)
         // make the searchupdating and searchbar delegate to resultsTableController
         searchController.searchBar.delegate = resultsTableController
         searchController.searchResultsUpdater = resultsTableController
         searchController.searchBar.placeholder = "Hello Loser"
+        
+        self.tableView.tableHeaderView = searchController.searchBar
         
         searchController.dimsBackgroundDuringPresentation = false
         
@@ -85,28 +86,30 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
         print("in Contacts View Controller password: \(userLoginInfo.passWord)")
         
-        //      通过tag寻找view
-        //        tableView.viewWithTag(10)
-        
-        // configure PullToBounce
-//        let bodyView = UIView()
-//        bodyView.frame = self.view.frame
-//        bodyView.frame.origin.y += 20 + 44
-//        self.view.addSubview(bodyView)
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        
-//        let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
-//        
-//        bodyView.addSubview(tableViewWrapper)
-//        tableViewWrapper.didPullToRefresh = {
-//            NSTimer.schedule(delay: 2) { timer in
-//                tableViewWrapper.stopLoadingAnimation()
-//            }
-//        }
-        
+        print("\(tableView.tableHeaderView?.frame.height)\n \(searchController.searchBar.frame.height)")
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func configurePullToBounceView(tableView: ContactsTableView){
+        let bodyView = UIView()
+        bodyView.frame = self.view.frame
+        bodyView.frame.origin.y += 20 + 44
+        self.view.addSubview(bodyView)
+        tableView.delegate = self
+        tableView.dataSource = self
+
+        let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
+
+        bodyView.addSubview(tableViewWrapper)
+        tableViewWrapper.didPullToRefresh = {
+            self.indexView.hidden = true
+            NSTimer.schedule(delay: 2) { timer in
+                tableViewWrapper.stopLoadingAnimation()
+                self.indexView.hidden = false
+            }
+        }
+        self.view.addSubview(bodyView)
     }
     
     func configureMJNIndexView(indexView: MJNIndexView) -> Void
@@ -115,6 +118,9 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         indexView.fontColor = UIColor.redColor()
         indexView.selectedItemFontColor = UIColor.purpleColor()
         indexView.font = indexView.font.fontWithSize(13)
+        
+        view.addSubview(indexView)
+        view.bringSubviewToFront(indexView)
     }
     
     
@@ -183,7 +189,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         case .Delete:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         case .Update:
-            let cell = tableView.cellForRowAtIndexPath(indexPath!) as! ContactsTableViewCell
+            let cell = tableView.cellForRowAtIndexPath(indexPath!) as! PureCodeTableViewCell
             configureCell(cell, indexPath: indexPath!)
         case .Move:
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
@@ -204,10 +210,9 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         return sectionInfo.name
     }
     
-    // indexBar
-//    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
-//        return fetchRequestController.sectionIndexTitles
-//    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
@@ -224,7 +229,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell", forIndexPath: indexPath) as! ContactsTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("PureContactCell", forIndexPath: indexPath) as! PureCodeTableViewCell
         
         
         configureCell(cell, indexPath: indexPath)
@@ -232,7 +237,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
-    func configureCell(cell: ContactsTableViewCell, indexPath: NSIndexPath) {
+    func configureCell(cell: PureCodeTableViewCell, indexPath: NSIndexPath) {
         let contact = fetchRequestController.objectAtIndexPath(indexPath) as! Contacts
         
         cell.portraitImage.image = UIImage(named: "obama")

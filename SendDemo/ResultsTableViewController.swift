@@ -32,13 +32,15 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
         return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
     }()
     
+    var ptbView: PullToBounceWrapper!
+    
     static let tableViewCellIdentifier = "searchedResultsCell"
     
     var fetchRequestController: NSFetchedResultsController!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        
         let fetchRequest = NSFetchRequest(entityName: "Contacts")
         let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -118,6 +120,10 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
         filteredContacts = allContacts.filter(){finalCompoundPredicate.evaluateWithObject($0)}
         
     }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+//        mainView?.hidden = false
+    }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let whitespaceCharacterSet = NSCharacterSet.whitespaceCharacterSet()
@@ -130,6 +136,16 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
         searchBar.resignFirstResponder()
     }
 
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+//        ptbView = searchBar.superview?.superview as! PullToBounceWrapper
+//        for v in ptbView.subviews{
+//            if v.isKindOfClass(ContactsTableView) {
+//                let ctv = v as! ContactsTableView
+//                ctv.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+//            }
+//        }
+        return true
+    }
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

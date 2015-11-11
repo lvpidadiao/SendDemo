@@ -22,6 +22,6 @@ class ContactsTableViewCell: UITableViewCell {
     @IBOutlet weak var isUpdateImage: UIImageView!
     @IBOutlet weak var isBusyImage: UIImageView!
     @IBOutlet weak var phoneNumberLabel: UILabel!
-    @IBOutlet weak var inputTextField: UITextField!
+
 
 }
