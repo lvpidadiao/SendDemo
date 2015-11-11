@@ -3,3 +3,4 @@
 //
 
 #include "MJNIndexView.h"
+#include "PureLayout.h"
