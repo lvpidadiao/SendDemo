@@ -12,21 +12,6 @@ import Alamofire
 import SwiftyJSON
 import PullToBounce
 
-extension NSTimer {
-    class func schedule(delay delay: NSTimeInterval, handler: NSTimer! -> Void) -> NSTimer {
-        let fireDate = delay + CFAbsoluteTimeGetCurrent()
-        let timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, fireDate, 0, 0, 0, handler)
-        CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopCommonModes)
-        return timer
-    }
-    
-    class func schedule(repeatInterval interval: NSTimeInterval, handler: NSTimer! -> Void) -> NSTimer {
-        let fireDate = interval + CFAbsoluteTimeGetCurrent()
-        let timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, fireDate, interval, 0, 0, handler)
-        CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopCommonModes)
-        return timer
-    }
-}
 
 class MainContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, MJNIndexViewDataSource
 {
@@ -104,21 +89,21 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         //        tableView.viewWithTag(10)
         
         // configure PullToBounce
-        let bodyView = UIView()
-        bodyView.frame = self.view.frame
-        bodyView.frame.origin.y += 20 + 44
-        self.view.addSubview(bodyView)
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
-        
-        bodyView.addSubview(tableViewWrapper)
-        tableViewWrapper.didPullToRefresh = {
-            NSTimer.schedule(delay: 2) { timer in
-                tableViewWrapper.stopLoadingAnimation()
-            }
-        }
+//        let bodyView = UIView()
+//        bodyView.frame = self.view.frame
+//        bodyView.frame.origin.y += 20 + 44
+//        self.view.addSubview(bodyView)
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        
+//        let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
+//        
+//        bodyView.addSubview(tableViewWrapper)
+//        tableViewWrapper.didPullToRefresh = {
+//            NSTimer.schedule(delay: 2) { timer in
+//                tableViewWrapper.stopLoadingAnimation()
+//            }
+//        }
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()

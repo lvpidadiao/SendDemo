@@ -1,11 +1,9 @@
 PODS:
   - Alamofire (2.0.1)
-  - PullToBounce (0.0.3)
   - SwiftyJSON (2.3.0)
 
 DEPENDENCIES:
   - Alamofire (~> 2.0)
-  - PullToBounce
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 EXTERNAL SOURCES:
@@ -19,7 +17,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 1d8e208d616fbbfd2391b15eae766d07c96cdc49
-  PullToBounce: d2c6300b92fa124f7133e0ca0088bbf7a7059194
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
 
 COCOAPODS: 0.37.2

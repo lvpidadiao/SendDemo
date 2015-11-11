@@ -4,7 +4,6 @@ use_frameworks!
 
 pod 'Alamofire', '~> 2.0'
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
-pod 'PullToBounce'
 
 target 'SendDemo' do
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
