@@ -48,7 +48,11 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     var resultsTableController: ResultsTableViewController!
     
-    var tableView: ContactsTableView!
+    var bodyView: UIView!
+    
+    @IBOutlet weak var tableView: UITableView!
+//    var tableView: ContactsTableView!
+    
     
     var indexView: MJNIndexView!
     
@@ -56,13 +60,13 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         
         // configure tableView and PullToBounce TableView
-        self.view.backgroundColor = UIColor.blue
-        tableView = ContactsTableView(frame: self.view.bounds, style: .Plain)
-        self.tableView.estimatedRowHeight = 80.0
+//        self.view.backgroundColor = UIColor.blue
+        tableView.estimatedRowHeight = 80.0
 
         let nib = UINib(nibName: "MainContactsTableCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "mainCell")
-        configurePullToBounceView(tableView)
+
+//        configurePullToBounceView(tableView)
         
         // configure MJNIndexView
         indexView = MJNIndexView(frame: view.bounds)
@@ -89,23 +93,16 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
         print("in Contacts View Controller password: \(userLoginInfo.passWord)")
         
-        print("\(tableView.tableHeaderView?.frame.height)\n \(searchController.searchBar.frame.height)")
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    func configurePullToBounceView(tableView: ContactsTableView){
-        let bodyView = UIView()
+    func configurePullToBounceView(tableView: UITableView){
+        bodyView = UIView.newAutoLayoutView()
         bodyView.frame = self.view.frame
-        bodyView.backgroundColor = UIColor.redColor()
-        bodyView.frame.y += 20 + 44
-        bodyView.frame.height -= 20 + 44
-//        tableView.frame.height = bodyView.frame.height - 30
-//        self.view.addSubview(bodyView)
-        tableView.frame.y += (self.navigationController?.navigationBar.frame.height)!
-        tableView.delegate = self
-        tableView.dataSource = self
-    
+//        bodyView.backgroundColor = UIColor.redColor()
+//        bodyView.frame.y += 20 + 44
+//        bodyView.frame.height -= 20 + 44
+
+        self.view.addSubview(bodyView)
         let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
 
         bodyView.addSubview(tableViewWrapper)
@@ -116,7 +113,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
                 self.indexView.hidden = false
             }
         }
-    
+
         self.view.addSubview(tableViewWrapper)
     }
     
@@ -131,6 +128,19 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         view.bringSubviewToFront(indexView)
     }
     
+//    var didSetupContraints = false
+//    override func updateViewConstraints() {
+//        if (!didSetupContraints) {
+//            tableView.autoCenterInSuperview()
+//            tableView.autoPinEdge(.Top, toEdge: .Bottom, ofView: (navigationController?.navigationBar)!)
+//            tableView.autoPinEdge(.Bottom, toEdge: .Top, ofView: (tabBarController?.tabBar)!)
+//            tableView.autoPinEdgeToSuperviewEdge(.Left)
+//            tableView.autoPinEdgeToSuperviewEdge(.Right)
+//            
+//            didSetupContraints = true
+//        }
+//        super.updateViewConstraints()
+//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
