@@ -48,8 +48,6 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     var resultsTableController: ResultsTableViewController!
     
-    var bodyView: UIView!
-    
     var tableView: ContactsTableView!
 //    var tableView: ContactsTableView!
     
@@ -94,15 +92,19 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
         print("in Contacts View Controller password: \(userLoginInfo.passWord)")
         
+        tabBarController!.tabBar.translucent = false
     }
     
     func configurePullToBounceView(tableView: ContactsTableView){
-        bodyView = UIView(frame: self.view.frame)
+        let bodyView = UIView()
+        bodyView.frame = self.view.frame
         bodyView.frame.y += 20 + 44
         
-        tableView.frame.height -= (20 + 44 + tabBarController!.tabBar.frame.height)
 
-        self.view.addSubview(bodyView)
+        tableView.frame.height -= (20 + 44 + tabBarController!.tabBar.frame.height)
+        tableView.dataSource = self
+        tableView.delegate  = self
+
         let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
 
         bodyView.addSubview(tableViewWrapper)
@@ -114,6 +116,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
 
+        bodyView.addSubview(tableViewWrapper)
         self.view.addSubview(bodyView)
     }
     
