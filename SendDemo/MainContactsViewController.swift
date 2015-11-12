@@ -50,7 +50,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     var bodyView: UIView!
     
-    @IBOutlet weak var tableView: UITableView!
+    var tableView: ContactsTableView!
 //    var tableView: ContactsTableView!
     
     
@@ -60,13 +60,14 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         
         // configure tableView and PullToBounce TableView
-//        self.view.backgroundColor = UIColor.blue
+        self.view.backgroundColor = UIColor.blue
+        tableView = ContactsTableView(frame: self.view.bounds, style: .Plain)
         tableView.estimatedRowHeight = 80.0
 
         let nib = UINib(nibName: "MainContactsTableCell", bundle: nil)
         tableView.registerNib(nib, forCellReuseIdentifier: "mainCell")
 
-//        configurePullToBounceView(tableView)
+        configurePullToBounceView(tableView)
         
         // configure MJNIndexView
         indexView = MJNIndexView(frame: view.bounds)
@@ -95,12 +96,11 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    func configurePullToBounceView(tableView: UITableView){
-        bodyView = UIView.newAutoLayoutView()
-        bodyView.frame = self.view.frame
-//        bodyView.backgroundColor = UIColor.redColor()
-//        bodyView.frame.y += 20 + 44
-//        bodyView.frame.height -= 20 + 44
+    func configurePullToBounceView(tableView: ContactsTableView){
+        bodyView = UIView(frame: self.view.frame)
+        bodyView.frame.y += 20 + 44
+        
+        tableView.frame.height -= (20 + 44 + tabBarController!.tabBar.frame.height)
 
         self.view.addSubview(bodyView)
         let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
@@ -114,7 +114,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
 
-        self.view.addSubview(tableViewWrapper)
+        self.view.addSubview(bodyView)
     }
     
     func configureMJNIndexView(indexView: MJNIndexView) -> Void
@@ -127,20 +127,6 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         view.addSubview(indexView)
         view.bringSubviewToFront(indexView)
     }
-    
-//    var didSetupContraints = false
-//    override func updateViewConstraints() {
-//        if (!didSetupContraints) {
-//            tableView.autoCenterInSuperview()
-//            tableView.autoPinEdge(.Top, toEdge: .Bottom, ofView: (navigationController?.navigationBar)!)
-//            tableView.autoPinEdge(.Bottom, toEdge: .Top, ofView: (tabBarController?.tabBar)!)
-//            tableView.autoPinEdgeToSuperviewEdge(.Left)
-//            tableView.autoPinEdgeToSuperviewEdge(.Right)
-//            
-//            didSetupContraints = true
-//        }
-//        super.updateViewConstraints()
-//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

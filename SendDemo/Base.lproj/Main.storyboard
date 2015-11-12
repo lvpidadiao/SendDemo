@@ -16,28 +16,9 @@
                     <view key="view" contentMode="scaleToFill" id="cfg-xf-tg7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="X3h-8y-7ch">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="h7U-NX-TnU" id="56L-cA-wUU"/>
-                                    <outlet property="delegate" destination="h7U-NX-TnU" id="FOr-NI-HEN"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="X3h-8y-7ch" firstAttribute="top" secondItem="cfg-xf-tg7" secondAttribute="top" id="X9j-cJ-gbu"/>
-                            <constraint firstAttribute="bottom" secondItem="X3h-8y-7ch" secondAttribute="bottom" id="gBg-cu-Tgo"/>
-                            <constraint firstAttribute="trailing" secondItem="X3h-8y-7ch" secondAttribute="trailing" id="npW-ih-Kq4"/>
-                            <constraint firstItem="X3h-8y-7ch" firstAttribute="leading" secondItem="cfg-xf-tg7" secondAttribute="leading" id="u3y-hC-nPy"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Send" id="UbR-ad-aeE"/>
-                    <connections>
-                        <outlet property="tableView" destination="X3h-8y-7ch" id="NbM-I5-xmT"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uWb-o4-BI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
