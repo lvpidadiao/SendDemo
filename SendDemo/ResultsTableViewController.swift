@@ -23,7 +23,8 @@ extension String {
     }
 }
 
-class ResultsTableViewController: UITableViewController,NSFetchedResultsControllerDelegate, UISearchBarDelegate,UISearchResultsUpdating {
+class ResultsTableViewController: UITableViewController,NSFetchedResultsControllerDelegate, UISearchBarDelegate,UISearchResultsUpdating, UISearchControllerDelegate
+{
 
     var allContacts = [Contacts]()
     var filteredContacts = [Contacts]()
@@ -73,6 +74,8 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
         
         
     }
+    
+    // MARK: - UISearch result updating method
     
     func filterContentForSearchText(searchText: String) {
         let searchItems = searchText.componentsSeparatedByString(" ") as [String]
@@ -166,5 +169,16 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
         cell.searchResultsImageView.image = UIImage(named: "obama")
         cell.searchedResultsNameLabel.text = contact.name
         cell.searchedResultsPhoneLabel.text = contact.phoneNumber
+    }
+    
+    // MARK: - searchResultsController delegate method
+    func willPresentSearchController(searchController: UISearchController) {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            searchController.searchResultsController!.view.hidden = false
+        }
+    }
+    
+    func didPresentSearchController(searchController: UISearchController) {
+        searchController.searchResultsController!.view.hidden = false
     }
 }

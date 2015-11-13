@@ -83,10 +83,11 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         searchController.searchBar.delegate = resultsTableController
         searchController.searchResultsUpdater = resultsTableController
         searchController.searchBar.placeholder = "Hello Loser"
+        searchController.delegate = resultsTableController
         
         self.tableView.tableHeaderView = searchController.searchBar
         
-        searchController.dimsBackgroundDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
         
         definesPresentationContext = true
         
@@ -102,6 +103,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
 
         tableView.frame.height -= (20 + 44 + tabBarController!.tabBar.frame.height)
+        tableView.separatorStyle = .None
         tableView.dataSource = self
         tableView.delegate  = self
 
