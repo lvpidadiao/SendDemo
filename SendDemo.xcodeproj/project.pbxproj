@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3B221E361B4410BB0097EC27 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B221E351B4410BB0097EC27 /* PersonalViewController.swift */; };
+		3B34DF9C1BFF259100A74275 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B34DF9B1BFF259100A74275 /* SignupViewController.swift */; };
+		3B34DF9E1BFF48BC00A74275 /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B34DF9D1BFF48BC00A74275 /* PasswordResetViewController.swift */; };
 		3B3E30241BE36C9300894070 /* ContactsManipulater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3E30231BE36C9300894070 /* ContactsManipulater.swift */; };
+		3B52D4FF1BFC279900D5465E /* ContactsSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B52D4FE1BFC279900D5465E /* ContactsSegmentedControl.xib */; };
 		3B568ABA1B96F90300828B48 /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B568AB91B96F90300828B48 /* LoginInfo.swift */; };
 		3B5F687B1BF218C900043FAE /* MainContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F687A1BF218C900043FAE /* MainContactsViewController.swift */; };
 		3B5F68801BF2219D00043FAE /* MJNIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F687F1BF2219D00043FAE /* MJNIndexView.m */; };
@@ -58,7 +61,10 @@
 		0DA793932504A762B681D559 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB7DEFCB007B9E428814551 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		3B221E351B4410BB0097EC27 /* PersonalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
+		3B34DF9B1BFF259100A74275 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		3B34DF9D1BFF48BC00A74275 /* PasswordResetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordResetViewController.swift; sourceTree = "<group>"; };
 		3B3E30231BE36C9300894070 /* ContactsManipulater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManipulater.swift; sourceTree = "<group>"; };
+		3B52D4FE1BFC279900D5465E /* ContactsSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactsSegmentedControl.xib; sourceTree = "<group>"; };
 		3B568AB91B96F90300828B48 /* LoginInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		3B5F687A1BF218C900043FAE /* MainContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContactsViewController.swift; sourceTree = "<group>"; };
 		3B5F687D1BF2219D00043FAE /* SendDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SendDemo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -174,6 +180,8 @@
 				3BF766D81BDE128E00D8FE05 /* ResultsTableViewController.swift */,
 				3B3E30231BE36C9300894070 /* ContactsManipulater.swift */,
 				3BDC72E11BEB058400282763 /* MyselfViewController.swift */,
+				3B34DF9B1BFF259100A74275 /* SignupViewController.swift */,
+				3B34DF9D1BFF48BC00A74275 /* PasswordResetViewController.swift */,
 			);
 			path = SendDemo;
 			sourceTree = "<group>";
@@ -255,6 +263,7 @@
 				3BF766D41BDE106700D8FE05 /* SearchResultsTableViewCell.swift */,
 				3BF26CB31BF2E7F1008F5638 /* ContactsTableView.swift */,
 				3BF26CB51BF2EDC4008F5638 /* PureCodeTableViewCell.swift */,
+				3B52D4FE1BFC279900D5465E /* ContactsSegmentedControl.xib */,
 			);
 			name = UIFile;
 			sourceTree = "<group>";
@@ -368,6 +377,7 @@
 				3B72B9CE1B14911900E2CE42 /* Main.storyboard in Resources */,
 				3B72B9D31B14911900E2CE42 /* LaunchScreen.xib in Resources */,
 				3B72B9D01B14911900E2CE42 /* Images.xcassets in Resources */,
+				3B52D4FF1BFC279900D5465E /* ContactsSegmentedControl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +443,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B34DF9C1BFF259100A74275 /* SignupViewController.swift in Sources */,
 				3BF26CB41BF2E7F1008F5638 /* ContactsTableView.swift in Sources */,
 				3BF26CAB1BF2E6FD008F5638 /* BounceView.swift in Sources */,
 				3B5F68801BF2219D00043FAE /* MJNIndexView.m in Sources */,
@@ -455,6 +466,7 @@
 				3B72B9C91B14911900E2CE42 /* SendDemo.xcdatamodeld in Sources */,
 				3B72B9C61B14911900E2CE42 /* AppDelegate.swift in Sources */,
 				3BF26CC11BF34D74008F5638 /* ALView+PureLayout.m in Sources */,
+				3B34DF9E1BFF48BC00A74275 /* PasswordResetViewController.swift in Sources */,
 				3BF26CAD1BF2E6FD008F5638 /* WaveView.swift in Sources */,
 				3B221E361B4410BB0097EC27 /* PersonalViewController.swift in Sources */,
 				3B5F687B1BF218C900043FAE /* MainContactsViewController.swift in Sources */,

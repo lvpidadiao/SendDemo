@@ -25,11 +25,13 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        registerForKeyboardNotifications()
     }
     
+    var activeField: UITextField!
     
     @IBOutlet var scrollView: UIScrollView!
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -52,6 +54,70 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         }
     }
     
+    //MARK: - Scroll text field to visible view area when keyboard show up 
+    func registerForKeyboardNotifications()
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWasShown:", name: UIKeyboardDidShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWasShown(aNotification: NSNotification) {
+        let info:NSDictionary = aNotification.userInfo!
+        let kbSize = info.objectForKey(UIKeyboardFrameBeginUserInfoKey)?.CGRectValue.size
+        
+     //   print((kbSize?.height)!)
+        
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, (kbSize?.height)!, 0.0)
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+        
+        var aRect:CGRect = self.view.frame
+        aRect.size.height -= (kbSize?.height)!
+        
+        if (!CGRectContainsPoint(aRect, activeField.frame.origin)) {
+            self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
+        }
+    }
+    
+//    func keyboardWasShown(aNotification: NSNotification) {
+//        let info:NSDictionary = aNotification.userInfo!
+//        let kbSize = info.objectForKey(UIKeyboardFrameBeginUserInfoKey)?.CGRectValue.size
+//        
+//        var bkgndRect = activeField.superview?.frame
+//        bkgndRect!.size.height += (kbSize?.height)!
+//        
+//        activeField.superview!.frame = bkgndRect!
+//        scrollView.setContentOffset(CGPointMake(0.0, activeField.frame.y - (kbSize?.height)!), animated: true)
+//        
+//    }
+    
+    func keyboardWillBeHidden(aNotification: NSNotification)
+    {
+        let contentInsets = UIEdgeInsetsZero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        activeField = textField
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        activeField = nil
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField === userName {
+            passWord.becomeFirstResponder()
+        }
+        else {
+            performSegueWithIdentifier("loginToTabBarControllerSegue", sender: nil)
+        }
+        return true
+    }
+    
+    // MARK: - operate CNContacts
     let contactStore = CNContactStore()
     
     func openSettings(){
@@ -161,20 +227,30 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
     }
     
     
-    
+    // MARK: - For user login
     @IBOutlet weak var userName: UITextField!
     
     @IBOutlet weak var passWord: UITextField!
     
     
     @IBAction func login(sender: AnyObject) {
-        print("\(userName.text!)")
-        print("\(passWord.text!)")
+        let username = userName?.text
+        let password = passWord?.text
         
-        if self.userName.text == "" || self.passWord.text == "" {
-            self.displayCantLoginAlert()
+        if username?.characters.count < 5 {
+            let usernameAlert = UIAlertController(title: "请注意", message: "用户名长度需大于5个字符", preferredStyle: .Alert)
+            usernameAlert.addAction(UIAlertAction(title: "返回", style: .Cancel, handler: nil))
+            self.presentViewController(usernameAlert, animated: true, completion: nil)
             return
         }
+        else if password?.characters.count < 7 {
+            let passwordAlert = UIAlertController(title: "请注意", message: "密码长度至少为7个字符", preferredStyle: .Alert)
+            passwordAlert.addAction(UIAlertAction(title: "返回", style: .Cancel, handler: nil))
+            self.presentViewController(passwordAlert, animated: true, completion:  nil)
+            return
+        }
+        
+        
         
         let requestBody = ["type":"update", "userinfo":["username": "liutong", "phonenumber": "13825231242"]]
         
@@ -190,12 +266,6 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         }
         
         performSegueWithIdentifier("loginToTabBarControllerSegue", sender: nil)
-    }
-    
-    func displayCantLoginAlert() {
-        let displayEnterFullLoginController = UIAlertController(title: "Error", message: "Please enter username and password", preferredStyle: .Alert)
-        displayEnterFullLoginController.addAction(UIAlertAction(title: "Return", style: .Cancel, handler: nil))
-        self.presentViewController(displayEnterFullLoginController, animated: true, completion: nil)
     }
     
     func makeRequestBody(type: String, _ user: String, _ phoneNumber: String) -> Dictionary<String, AnyObject> {
@@ -238,15 +308,10 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField === userName {
-            passWord.becomeFirstResponder()
-        }
-        else {
-            performSegueWithIdentifier("loginToTabBarControllerSegue", sender: nil)
-        }
-        return true
+    @IBAction func unwindToLoginScreen(segue: UIStoryboardSegue) {
+        
     }
+
     @IBAction func clearInput(sender: UIButton) {
         userName.text?.removeAll()
         passWord.text?.removeAll()
