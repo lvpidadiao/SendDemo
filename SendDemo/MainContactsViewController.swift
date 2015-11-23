@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import Alamofire
 import SwiftyJSON
-import PullToBounce
 
 
 class MainContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, MJNIndexViewDataSource
@@ -136,8 +135,18 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        getMyFriendsFromServer()
+//        getMyFriendsFromServer()
+        testAlamofireAndSwiftyJSON()
         print("we have post data to server")
+    }
+    
+    func testAlamofireAndSwiftyJSON() {
+        Alamofire.request(.GET, "https://httpbin.org/get").responseJSON(){response in
+            print(response.data)
+            let json = JSON(data: response.data!)
+            print(json["headers"])
+            print(response.result.value)
+        }
     }
     
     func getMyFriendsFromServer() {
@@ -148,26 +157,26 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
         let dataToTransfer = data as NSDictionary
         
-        Alamofire.request(.POST, "http://192.168.0.109/login", parameters: dataToTransfer as? [String : AnyObject] , encoding: .JSON).responseJSON(){
-            (_, _, result) in
-            print("response String: \(result)")
-            if let json = result.value {
-                var jsonData = JSON(json)
-                
-                if let retVal = jsonData["retValue"].bool {
-                    print("retValue \(retVal)")
-                    if retVal == true {
-                        self.saveFriends(jsonData["friendInfo"])
-                        print("yes it is true")
-                    }
-                }
-                
-                if let returnedGetTime:Int = json["gettime"] as? Int{
-                    defaults.setInteger(returnedGetTime, forKey: "ServerGetTime")
-                }
-                
-            }
-        }
+//        Alamofire.request(.POST, "http://192.168.0.109/login", parameters: dataToTransfer as? [String : AnyObject] , encoding: .JSON).responseJSON(){
+//            (_, _, result) in
+//            print("response String: \(result)")
+//            if let json = result.value {
+//                var jsonData = JSON(json)
+//                
+//                if let retVal = jsonData["retValue"].bool {
+//                    print("retValue \(retVal)")
+//                    if retVal == true {
+//                        self.saveFriends(jsonData["friendInfo"])
+//                        print("yes it is true")
+//                    }
+//                }
+//                
+//                if let returnedGetTime:Int = json["gettime"] as? Int{
+//                    defaults.setInteger(returnedGetTime, forKey: "ServerGetTime")
+//                }
+//                
+//            }
+//        }
     }
     
     func saveFriends(friendArray: JSON){
