@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import Alamofire
+import SwiftyJSON
 import AddressBook
 import AddressBookUI
 import CoreData
@@ -251,18 +252,14 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         }
         
         
+        let requestBody = ["username":username!, "password":password!]
         
-        let requestBody = ["type":"update", "userinfo":["username": "liutong", "phonenumber": "13825231242"]]
-        
-        Alamofire.request(.POST, "http://192.168.0.109/login", parameters: requestBody , encoding: .JSON)
-            .response(){ (request, response, data, error) in
-                print("request: \(request)")
-                print("response: \(response)")
-                print("data:    \(data)")
-                let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                print("strData: \(strData)")
-                print("error:   \(error)")
-                
+        Alamofire.request(.POST, "https://192.168.0.108/login", parameters: requestBody , encoding: .JSON).responseJSON { response in
+            print("\(response.result.error?.localizedDescription)")
+            let jsondata = JSON(response.result.value!)
+            if let jsondata = response.result.value {
+                print("Json: \(jsondata)")
+            }
         }
         
         performSegueWithIdentifier("loginToTabBarControllerSegue", sender: nil)
@@ -286,18 +283,18 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
             var destination = segue.destinationViewController
             if let tvc = destination as? UITabBarController{
                 destination = (tvc.viewControllers![0] as! UINavigationController).visibleViewController!
-                let otherNVC = tvc.viewControllers![1] as! UINavigationController
-                otherNVC.tabBarItem.title = "刘通"
-                otherNVC.tabBarItem.image = UIImage(named: "chat")
-                otherNVC.tabBarItem.badgeValue = "new"
-                //                let width = tvc.tabBar.frame.size.width
-                //                let height = tvc.tabBar.frame.size.height
-                //                let tabBarImage = UIImage(named: "account")
-                //                let tabBarBGImageView = UIImageView(frame: CGRectMake(0, 0, width, height))
-                //                tabBarBGImageView.contentMode = .ScaleAspectFit
-                //                tabBarBGImageView.image = tabBarImage
-                //                tvc.tabBar.insertSubview(tabBarBGImageView, atIndex: 4)
-                
+//                let otherNVC = tvc.viewControllers![1] as! UINavigationController
+//                otherNVC.tabBarItem.title = "刘通"
+//                otherNVC.tabBarItem.image = UIImage(named: "chat")
+//                otherNVC.tabBarItem.badgeValue = "new"
+//                //                let width = tvc.tabBar.frame.size.width
+//                //                let height = tvc.tabBar.frame.size.height
+//                //                let tabBarImage = UIImage(named: "account")
+//                //                let tabBarBGImageView = UIImageView(frame: CGRectMake(0, 0, width, height))
+//                //                tabBarBGImageView.contentMode = .ScaleAspectFit
+//                //                tabBarBGImageView.image = tabBarImage
+//                //                tvc.tabBar.insertSubview(tabBarBGImageView, atIndex: 4)
+//                
             }
             
             
