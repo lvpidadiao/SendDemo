@@ -11,10 +11,10 @@ import CoreData
 import Alamofire
 import SwiftyJSON
 
+
 class MainContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, MJNIndexViewDataSource
 {
 
-    @IBOutlet weak var tableView: UITableView!
     // fetch contacts data from native CoreData store
     var coreDataStack:CoreDataStack = {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
@@ -47,36 +47,29 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     var resultsTableController: ResultsTableViewController!
     
+    var tableView: ContactsTableView!
+    
+    var indexView: MJNIndexView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // configure MJNIndexView
-        let indexView = MJNIndexView(frame: view.bounds)
-        indexView.dataSource = self
-        indexView.backgroundColor = UIColor.clearColor()
-        indexView.fontColor = UIColor.blueColor()
-        indexView.font = indexView.font.fontWithSize(13)
         
-        view.addSubview(indexView)
+//        navigationController?.navigationBar.hidden = true
         
-        // configure coredata data
-        self.tableView.estimatedRowHeight = 80.0
+        // configure tableView and PullToBounce TableView
 
-//        let fetchRequest = NSFetchRequest(entityName: "Contacts")
-//        let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
-//        fetchRequest.sortDescriptors = [sortDescriptor]
-//        
-//        let managedObjectContext = coreDataStack.context
-//        fetchRequestController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
-//        fetchRequestController.delegate = self
-//        
-//        do {
-//            try fetchRequestController.performFetch()
-//        }
-//        catch {
-//            print(error)
-//        }
+        tableView = ContactsTableView(frame: self.view.bounds, style: .Plain)
+        tableView.estimatedRowHeight = 80.0
+
+        let nib = UINib(nibName: "MainContactsTableCell", bundle: nil)
+        tableView.registerNib(nib, forCellReuseIdentifier: "mainCell")
+
+        configurePullToBounceView(tableView)
         
-        let customHeaderView = UIView(frame: CGRectMake(0, 0, 320, 44))
+        // configure MJNIndexView
+        indexView = MJNIndexView(frame: view.bounds)
+        configureMJNIndexView(indexView)
+
         // MARK: - Search controller implementation
         resultsTableController = ResultsTableViewController()
         
@@ -85,70 +78,99 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         
         searchController = UISearchController(searchResultsController: resultsTableController)
         searchController.searchBar.sizeToFit()
-        
-        customHeaderView.addSubview(searchController.searchBar)
-        tableView.tableHeaderView = customHeaderView
-        tableView.bringSubviewToFront(customHeaderView)
         // make the searchupdating and searchbar delegate to resultsTableController
         searchController.searchBar.delegate = resultsTableController
         searchController.searchResultsUpdater = resultsTableController
         searchController.searchBar.placeholder = "Hello Loser"
+        searchController.delegate = resultsTableController
         
-        searchController.dimsBackgroundDuringPresentation = false
+        self.tableView.tableHeaderView = searchController.searchBar
+        
+        searchController.dimsBackgroundDuringPresentation = true
         
         definesPresentationContext = true
         
         print("in Contacts View Controller password: \(userLoginInfo.passWord)")
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         
-        tableView.sectionIndexBackgroundColor = UIColor.clearColor()
-        
-        //      通过tag寻找view
-        //        tableView.viewWithTag(10)
-        
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        tabBarController!.tabBar.translucent = false
     }
     
+    
+    func configurePullToBounceView(tableView: ContactsTableView){
+        let bodyView = UIView()
+        bodyView.frame = self.view.frame
+        bodyView.frame.y += 20 + 44
+        bodyView.backgroundColor = UIColor.blue
+
+        tableView.frame.height -= (20 + 44 + tabBarController!.tabBar.frame.height)
+        tableView.separatorStyle = .None
+        tableView.dataSource = self
+        tableView.delegate  = self
+
+        let tableViewWrapper = PullToBounceWrapper(scrollView: tableView)
+
+        bodyView.addSubview(tableViewWrapper)
+        tableViewWrapper.didPullToRefresh = {
+            self.indexView.hidden = true
+            NSTimer.schedule(delay: 2) { timer in
+                tableViewWrapper.stopLoadingAnimation()
+                self.indexView.hidden = false
+            }
+        }
+
+        bodyView.addSubview(tableViewWrapper)
+        self.view.addSubview(bodyView)
+    }
+    
+    func configureMJNIndexView(indexView: MJNIndexView) -> Void
+    {
+        indexView.dataSource = self
+        indexView.fontColor = UIColor.redColor()
+        indexView.selectedItemFontColor = UIColor.purpleColor()
+        indexView.font = indexView.font.fontWithSize(13)
+        
+        view.addSubview(indexView)
+        view.bringSubviewToFront(indexView)
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        getMyFriendsFromServer()
-        print("we have post data to server")
+        setCurrentViewController(self)
+//        getMyFriendsFromServer()
+
     }
     
-    func getMyFriendsFromServer() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let gettime = defaults.integerForKey("ServerGetTime")
+
+    
+//    func getMyFriendsFromServer() {
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        let gettime = defaults.integerForKey("ServerGetTime")
+//        
+//        let data:NSMutableDictionary = ["userName": "\(userLoginInfo.userName)", "reqInfo":["reqType":"getAllChanged", "getTime": gettime]]
+    
+//        let dataToTransfer = data as NSDictionary
         
-        let data:NSMutableDictionary = ["userName": "\(userLoginInfo.userName)", "reqInfo":["reqType":"getAllChanged", "getTime": gettime]]
-        
-        let dataToTransfer = data as NSDictionary
-        
-        Alamofire.request(.POST, "http://192.168.0.109/login", parameters: dataToTransfer as? [String : AnyObject] , encoding: .JSON).responseJSON(){
-            (_, _, result) in
-            print("response String: \(result)")
-            if let json = result.value {
-                var jsonData = JSON(json)
-                
-                if let retVal = jsonData["retValue"].bool {
-                    print("retValue \(retVal)")
-                    if retVal == true {
-                        self.saveFriends(jsonData["friendInfo"])
-                        print("yes it is true")
-                    }
-                }
-                
-                if let returnedGetTime:Int = json["gettime"] as? Int{
-                    defaults.setInteger(returnedGetTime, forKey: "ServerGetTime")
-                }
-                
-            }
-        }
-    }
+//        Alamofire.request(.POST, "http://192.168.0.109/login", parameters: dataToTransfer as? [String : AnyObject] , encoding: .JSON).responseJSON(){
+//            (_, _, result) in
+//            print("response String: \(result)")
+//            if let json = result.value {
+//                var jsonData = JSON(json)
+//                
+//                if let retVal = jsonData["retValue"].bool {
+//                    print("retValue \(retVal)")
+//                    if retVal == true {
+//                        self.saveFriends(jsonData["friendInfo"])
+//                        print("yes it is true")
+//                    }
+//                }
+//                
+//                if let returnedGetTime:Int = json["gettime"] as? Int{
+//                    defaults.setInteger(returnedGetTime, forKey: "ServerGetTime")
+//                }
+//                
+//            }
+//        }
+//    }
     
     func saveFriends(friendArray: JSON){
         
@@ -199,10 +221,9 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         return sectionInfo.name
     }
     
-    // indexBar
-//    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
-//        return fetchRequestController.sectionIndexTitles
-//    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
@@ -219,7 +240,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell", forIndexPath: indexPath) as! ContactsTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("mainCell", forIndexPath: indexPath) as! ContactsTableViewCell
         
         
         configureCell(cell, indexPath: indexPath)

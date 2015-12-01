@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="mainCell" rowHeight="71" id="HO3-LC-gkA" customClass="ContactsTableViewCell" customModule="SendDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HO3-LC-gkA" id="pBN-bu-FNl">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QH9-5U-7eW" userLabel="Portait">
+                        <rect key="frame" x="8" y="8" width="64" height="63"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IdA-GE-BUj">
+                        <rect key="frame" x="80" y="8" width="97" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="LkQ-C2-DCH"/>
+                            <constraint firstAttribute="width" constant="97" id="Sx7-7I-6dW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18768147291" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zqd-8x-WSc">
+                        <rect key="frame" x="184" y="8" width="354" height="32"/>
+                        <fontDescription key="fontDescription" name="ZapfDingbatsITC" family="Zapf Dingbats" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7t8-Ow-KaP" userLabel="isUpdate">
+                        <rect key="frame" x="547" y="8" width="23" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="Hpx-z7-dEo"/>
+                            <constraint firstAttribute="height" constant="23" id="Khb-ws-ZIx"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-wu-EAS" userLabel="sex">
+                        <rect key="frame" x="80" y="48" width="23" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="jjq-Mu-KZu"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eRx-6Z-2uA" userLabel="isBusy">
+                        <rect key="frame" x="547" y="48" width="23" height="23"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="eRx-6Z-2uA" firstAttribute="top" secondItem="DzR-wu-EAS" secondAttribute="top" id="15F-UI-aSx"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="eRx-6Z-2uA" secondAttribute="trailing" constant="22" id="3zc-br-hMy"/>
+                    <constraint firstItem="7t8-Ow-KaP" firstAttribute="leading" secondItem="Zqd-8x-WSc" secondAttribute="trailing" constant="9" id="57w-65-DJW"/>
+                    <constraint firstItem="DzR-wu-EAS" firstAttribute="bottom" secondItem="QH9-5U-7eW" secondAttribute="bottom" id="6Oe-In-BCM"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="top" secondItem="pBN-bu-FNl" secondAttribute="topMargin" id="6SK-QA-aau"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="top" secondItem="7t8-Ow-KaP" secondAttribute="top" id="IG0-pQ-iSt"/>
+                    <constraint firstItem="DzR-wu-EAS" firstAttribute="leading" secondItem="QH9-5U-7eW" secondAttribute="trailing" constant="8" id="Kjg-qA-Ru9"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="leading" secondItem="pBN-bu-FNl" secondAttribute="leading" constant="80" id="Q3m-FF-UJi"/>
+                    <constraint firstItem="eRx-6Z-2uA" firstAttribute="bottom" secondItem="DzR-wu-EAS" secondAttribute="bottom" id="Q48-8Q-Kv2"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="leading" secondItem="DzR-wu-EAS" secondAttribute="leading" id="Q6R-xs-NZq"/>
+                    <constraint firstItem="eRx-6Z-2uA" firstAttribute="trailing" secondItem="7t8-Ow-KaP" secondAttribute="trailing" id="QBM-nM-rJF"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="top" secondItem="QH9-5U-7eW" secondAttribute="top" id="RKk-tK-6hb"/>
+                    <constraint firstItem="DzR-wu-EAS" firstAttribute="bottom" secondItem="pBN-bu-FNl" secondAttribute="bottomMargin" id="WZg-4s-eAr"/>
+                    <constraint firstItem="QH9-5U-7eW" firstAttribute="leading" secondItem="pBN-bu-FNl" secondAttribute="leadingMargin" id="X12-Nd-cpe"/>
+                    <constraint firstItem="DzR-wu-EAS" firstAttribute="leading" secondItem="QH9-5U-7eW" secondAttribute="trailing" constant="8" symbolic="YES" id="YYh-Ep-C0h"/>
+                    <constraint firstItem="eRx-6Z-2uA" firstAttribute="trailing" secondItem="7t8-Ow-KaP" secondAttribute="trailing" id="Zhy-ca-wnZ"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="leading" secondItem="QH9-5U-7eW" secondAttribute="trailing" constant="8" symbolic="YES" id="ciD-qt-YBK"/>
+                    <constraint firstItem="eRx-6Z-2uA" firstAttribute="leading" secondItem="7t8-Ow-KaP" secondAttribute="leading" id="f27-1n-1nc"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="bottom" secondItem="Zqd-8x-WSc" secondAttribute="bottom" id="hoP-bv-Rdy"/>
+                    <constraint firstItem="DzR-wu-EAS" firstAttribute="top" secondItem="IdA-GE-BUj" secondAttribute="bottom" constant="8" symbolic="YES" id="i4J-Rk-Vdh"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="top" secondItem="Zqd-8x-WSc" secondAttribute="top" id="iMy-9e-873"/>
+                    <constraint firstItem="Zqd-8x-WSc" firstAttribute="leading" secondItem="IdA-GE-BUj" secondAttribute="trailing" constant="7" id="jdD-9g-Fah"/>
+                    <constraint firstItem="IdA-GE-BUj" firstAttribute="leading" secondItem="QH9-5U-7eW" secondAttribute="trailing" constant="8" id="k28-Tc-KIv"/>
+                    <constraint firstItem="7t8-Ow-KaP" firstAttribute="trailing" secondItem="pBN-bu-FNl" secondAttribute="trailingMargin" id="tlB-12-2Qy"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="eRx-6Z-2uA" secondAttribute="trailing" constant="22" id="zgf-gi-4M5"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="tlB-12-2Qy"/>
+                        <exclude reference="QBM-nM-rJF"/>
+                        <exclude reference="zgf-gi-4M5"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="isBusyImage" destination="eRx-6Z-2uA" id="NeE-tU-3oB"/>
+                <outlet property="isUpdateImage" destination="7t8-Ow-KaP" id="Yql-la-cJv"/>
+                <outlet property="nameLabel" destination="IdA-GE-BUj" id="IQF-2K-wx0"/>
+                <outlet property="phoneNumberLabel" destination="Zqd-8x-WSc" id="OUA-bd-HKl"/>
+                <outlet property="portraitImage" destination="QH9-5U-7eW" id="IfF-z8-ggu"/>
+                <outlet property="sexImage" destination="DzR-wu-EAS" id="ZGx-nH-unN"/>
+            </connections>
+            <point key="canvasLocation" x="454" y="190"/>
+        </tableViewCell>
+    </objects>
+</document>

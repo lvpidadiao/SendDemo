@@ -10,20 +10,41 @@ import UIKit
 import CoreData
 import Contacts
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let contactStore = CNContactStore()
     lazy var coreDataStack = CoreDataStack()
+    var reach: Reachability?
+    var currentVC: UIViewController?
     
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        // Programatically set the initial view controller using Storyboards
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainTabController = mainStoryboard.instantiateViewControllerWithIdentifier("MainTabEntry")
+        currentVC = mainTabController
+        self.window?.rootViewController = mainTabController
+        self.window?.makeKeyAndVisible()
+        
         // 当通讯录变更时获取通知
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactChanged:", name: CNContactStoreDidChangeNotification, object: nil)
+        LoginManager.loginForSessionToken(currentVC!)
+        
+        // test reachability
+        reach = Reachability.reachabilityForInternetConnection()
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: kReachabilityChangedNotification, object: nil)
+        reach!.startNotifier()
+
         return true
     }
+    
     
     func contactChanged(notification: NSNotification) {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -81,6 +102,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func reachabilityChanged(note: NSNotification)
+    {
+        if ((self.reach?.isReachable()) == true) {
+            if ((reach?.isReachableViaWiFi()) == true) {
+                let alert = UIAlertController(title: "网络连接", message: "目前wifi连接畅通", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "好球", style: .Cancel, handler: nil))
+                currentVC?.presentViewController(alert, animated: true, completion: nil)
+            }else {
+                print("via 3G/4G")
+            }
+        }
+        else {
+            let alert = UIAlertController(title: "网络！", message: "没网咋办啊", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "算了", style: .Cancel, handler: nil))
+            
+            currentVC?.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -103,11 +143,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        
+        reach?.stopNotifier()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: kReachabilityChangedNotification, object: nil)
         coreDataStack.saveContext()
     }
     
-
+    
 
 
 }
