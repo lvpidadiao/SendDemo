@@ -18,6 +18,17 @@ class SignupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setCurrentViewController(self)
+    }
+
+    @IBAction func signupAction(sender: UIButton) {
+        let requestBody = ["username":usernameTextField.text!, "password":passwordTextField.text!, "email":emailTextField.text!]
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+        spinner.startAnimating()
+        self.view.addSubview(spinner)
+        LoginManager.signupForHTTP(requestBody, VC: self, spinner: spinner)
+    }
 
 }
-	

@@ -75,6 +75,11 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setCurrentViewController(self)
+    }
+    
     // MARK: - UISearch result updating method
     
     func filterContentForSearchText(searchText: String) {

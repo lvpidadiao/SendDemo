@@ -84,10 +84,10 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-SendDemo/Alamofire.framework"
+  install_framework "Pods-SendDemo/NVActivityIndicatorView.framework"
   install_framework "Pods-SendDemo/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-SendDemo/Alamofire.framework"
+  install_framework "Pods-SendDemo/NVActivityIndicatorView.framework"
   install_framework "Pods-SendDemo/SwiftyJSON.framework"
 fi

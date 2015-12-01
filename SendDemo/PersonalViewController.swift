@@ -29,6 +29,11 @@ class PersonalViewController: UIViewController {
         personPortraitImage.image = UIImage(named: "obama")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setCurrentViewController(self)
+    }
+    
     class func detailViewControllerForProduct(info: Contacts) -> PersonalViewController {
         let storyboard = UIStoryboard(name: PersonalViewController.storyboardName, bundle: nil)
         

@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Alamofire.xcscheme</key>
+		<key>NVActivityIndicatorView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>432ECC54282C84882B482CCB4CF227FC</key>
+		<key>3F71CECC67D2DCDD150DE0C8CC5CD78C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4D050C3C0956269AB7C272ED2FFD9BF1</key>
+		<key>46A5DE0A4280FA63F2400C0644C38FF5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8972D1B3785A7CF11C5D31FB702BCB0E</key>
+		<key>B647478208E1DA762F3ED15BC1943EA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EA5783E1E72DAF034F5567D9F2721A2E</key>
+		<key>DCBB9B8C6FCF3BA0DFFB04DB29BC4F20</key>
 		<dict>
 			<key>primary</key>
 			<true/>

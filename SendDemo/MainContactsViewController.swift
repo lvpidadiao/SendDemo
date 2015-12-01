@@ -48,16 +48,16 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     var resultsTableController: ResultsTableViewController!
     
     var tableView: ContactsTableView!
-//    var tableView: ContactsTableView!
-    
     
     var indexView: MJNIndexView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        navigationController?.navigationBar.hidden = true
+        
         // configure tableView and PullToBounce TableView
-        self.view.backgroundColor = UIColor.blue
+
         tableView = ContactsTableView(frame: self.view.bounds, style: .Plain)
         tableView.estimatedRowHeight = 80.0
 
@@ -95,11 +95,12 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         tabBarController!.tabBar.translucent = false
     }
     
+    
     func configurePullToBounceView(tableView: ContactsTableView){
         let bodyView = UIView()
         bodyView.frame = self.view.frame
         bodyView.frame.y += 20 + 44
-        
+        bodyView.backgroundColor = UIColor.blue
 
         tableView.frame.height -= (20 + 44 + tabBarController!.tabBar.frame.height)
         tableView.separatorStyle = .None
@@ -134,28 +135,20 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setCurrentViewController(self)
 //        getMyFriendsFromServer()
-        testAlamofireAndSwiftyJSON()
-        print("we have post data to server")
+
     }
     
-    func testAlamofireAndSwiftyJSON() {
-        Alamofire.request(.GET, "https://httpbin.org/get").responseJSON(){response in
-            print(response.data)
-            let json = JSON(data: response.data!)
-            print(json["headers"])
-            print(response.result.value)
-        }
-    }
+
     
-    func getMyFriendsFromServer() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let gettime = defaults.integerForKey("ServerGetTime")
-        
-        let data:NSMutableDictionary = ["userName": "\(userLoginInfo.userName)", "reqInfo":["reqType":"getAllChanged", "getTime": gettime]]
-        
-        let dataToTransfer = data as NSDictionary
+//    func getMyFriendsFromServer() {
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        let gettime = defaults.integerForKey("ServerGetTime")
+//        
+//        let data:NSMutableDictionary = ["userName": "\(userLoginInfo.userName)", "reqInfo":["reqType":"getAllChanged", "getTime": gettime]]
+    
+//        let dataToTransfer = data as NSDictionary
         
 //        Alamofire.request(.POST, "http://192.168.0.109/login", parameters: dataToTransfer as? [String : AnyObject] , encoding: .JSON).responseJSON(){
 //            (_, _, result) in
@@ -177,7 +170,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
 //                
 //            }
 //        }
-    }
+//    }
     
     func saveFriends(friendArray: JSON){
         

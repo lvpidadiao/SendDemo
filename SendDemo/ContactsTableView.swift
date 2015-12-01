@@ -14,7 +14,6 @@ class ContactsTableView: UITableView {
         super.init(frame: frame, style: style)
 //        self.registerClass(PureCodeTableViewCell.self, forCellReuseIdentifier: "PureContactCell")
         self.separatorStyle = UITableViewCellSeparatorStyle.None
-        
     }
     
     required init?(coder aDecoder: NSCoder){

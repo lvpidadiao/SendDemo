@@ -1,9 +1,9 @@
 PODS:
-  - Alamofire (3.1.2)
+  - NVActivityIndicatorView (2.1)
   - SwiftyJSON (2.3.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
+  - NVActivityIndicatorView
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 EXTERNAL SOURCES:
@@ -16,7 +16,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
+  NVActivityIndicatorView: 84aa48f7ec1efbfd0645e9f469097d94c6f65417
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
 
 COCOAPODS: 0.39.0

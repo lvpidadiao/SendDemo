@@ -14,6 +14,19 @@ class PasswordResetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setCurrentViewController(self)
+    }
+    
+    @IBAction func requestForPasswordReset(sender: UIButton) {
+        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+        spinner.startAnimating()
+        self.view.addSubview(spinner)
+        let reqBody = ["email": emailTextField.text!]
+        LoginManager.passwordResetForHTTP(self, requestBody: reqBody, spinner: spinner)
+    }
+    
 }

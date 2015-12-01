@@ -17,7 +17,7 @@ import CoreTelephony
 import Contacts
 import ContactsUI
 
-class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, UITextFieldDelegate {
+class LoginInScrollViewController: UIViewController, UITextFieldDelegate {
     
     let store = (UIApplication.sharedApplication().delegate as! AppDelegate).contactStore
     var coreDataStack:CoreDataStack = {
@@ -26,8 +26,12 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         registerForKeyboardNotifications()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setCurrentViewController(self)
     }
     
     var activeField: UITextField!
@@ -64,20 +68,22 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
     }
     
     func keyboardWasShown(aNotification: NSNotification) {
-        let info:NSDictionary = aNotification.userInfo!
-        let kbSize = info.objectForKey(UIKeyboardFrameBeginUserInfoKey)?.CGRectValue.size
-        
-     //   print((kbSize?.height)!)
-        
-        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, (kbSize?.height)!, 0.0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-        
-        var aRect:CGRect = self.view.frame
-        aRect.size.height -= (kbSize?.height)!
-        
-        if (!CGRectContainsPoint(aRect, activeField.frame.origin)) {
-            self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
+        if activeField != nil {
+            let info:NSDictionary = aNotification.userInfo!
+            let kbSize = info.objectForKey(UIKeyboardFrameBeginUserInfoKey)?.CGRectValue.size
+            
+         //   print((kbSize?.height)!)
+            
+            let contentInsets = UIEdgeInsetsMake(0.0, 0.0, (kbSize?.height)!, 0.0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+            
+            var aRect:CGRect = self.view.frame
+            aRect.size.height -= (kbSize?.height)!
+            
+            if (!CGRectContainsPoint(aRect, activeField.frame.origin)) {
+                self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
+            }
         }
     }
     
@@ -126,15 +132,16 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         UIApplication.sharedApplication().openURL(url!)
     }
     
+    
+    
     // read all contacts and save to CoreData
     func readContactFromAddressBookAndSave() {
         //check whether the CoreData has the original AddressBook
         let defaults = NSUserDefaults.standardUserDefaults()
-        let isAddressBookStored = defaults.boolForKey("isAddressBookStored")
+        let isAddressBookStored = defaults.boolForKey(UserDefaultsKeys.AddressBookHasSotredKey)
         if (isAddressBookStored == true){
             return
         }
-        
         // get contacts
         
         let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactImageDataKey, CNContactPhoneNumbersKey]
@@ -188,7 +195,7 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
             }
         }
         
-        defaults.setBool(true, forKey: "isAddressBookStored")
+        defaults.setBool(true, forKey: UserDefaultsKeys.AddressBookHasSotredKey)
         
     }
     
@@ -227,7 +234,6 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
         presentViewController(cantAccessContactAlert, animated: true, completion: nil)
     }
     
-    
     // MARK: - For user login
     @IBOutlet weak var userName: UITextField!
     
@@ -250,19 +256,17 @@ class LoginInScrollViewController: UIViewController, NSURLSessionDataDelegate, U
             self.presentViewController(passwordAlert, animated: true, completion:  nil)
             return
         }
-        
-        
-        let requestBody = ["username":username!, "password":password!]
-        
-        Alamofire.request(.POST, "https://192.168.0.108/login", parameters: requestBody , encoding: .JSON).responseJSON { response in
-            print("\(response.result.error?.localizedDescription)")
-            let jsondata = JSON(response.result.value!)
-            if let jsondata = response.result.value {
-                print("Json: \(jsondata)")
-            }
+        else{
+            let requestBody = ["username":username!, "password":password!]
+            let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+            spinner.color = UIColor.redColor()
+            spinner.startAnimating()
+            self.view.addSubview(spinner)
+            
+            LoginManager.loginForHTTP(requestBody, VC: self, spinner: spinner)
+            
+
         }
-        
-        performSegueWithIdentifier("loginToTabBarControllerSegue", sender: nil)
     }
     
     func makeRequestBody(type: String, _ user: String, _ phoneNumber: String) -> Dictionary<String, AnyObject> {
