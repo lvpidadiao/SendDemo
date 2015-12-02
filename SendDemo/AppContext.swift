@@ -14,3 +14,8 @@ func setCurrentViewController(vc: UIViewController)
     let appDelegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
     appDelegate.currentVC = vc
 }
+
+func getCurrentViewController() -> UIViewController? {
+    let appDelegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
+    return appDelegate.currentVC
+}

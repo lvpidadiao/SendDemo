@@ -20,5 +20,6 @@ class Contacts: NSManagedObject {
     @NSManaged var portrait:NSData!
     @NSManaged var personNameFirstLetter: String!
     @NSManaged var identifier: String!
+    @NSManaged var phoneticName: String!
 }
 

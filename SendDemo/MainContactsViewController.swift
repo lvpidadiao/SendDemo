@@ -19,14 +19,13 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     var coreDataStack:CoreDataStack = {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
     }()
-    var fetchRequestController : NSFetchedResultsController {
+    var fetchRequestController : NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Contacts")
         let sortDescriptor = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack.context
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
-        frc.delegate = self
         
         do {
             try frc.performFetch()
@@ -35,9 +34,11 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
             print(error)
         }
         return frc
-        
-    }
+    }()
     
+    var backfrc: NSFetchedResultsController?
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     // get userInfo
     var userLoginInfo:loginInfo = loginInfo()
     // search controller
@@ -51,8 +52,12 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     
     var indexView: MJNIndexView!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchRequestController.delegate = self
         
 //        navigationController?.navigationBar.hidden = true
         
@@ -136,6 +141,17 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setCurrentViewController(self)
+        
+        let reach = (UIApplication.sharedApplication().delegate as! AppDelegate).reach
+        // if reachable not check the validation ,just wait to complete server code
+        if !reach!.isReachable() {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+                LoginManager.loginForSessionToken(self)
+            }
+        }
+        else {
+            print("reachable, but we wait.")
+        }
 //        getMyFriendsFromServer()
 
     }
@@ -172,10 +188,6 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
 //        }
 //    }
     
-    func saveFriends(friendArray: JSON){
-        
-    }
-    
     // MARK: - when CoreData changed, update tableView
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         tableView.beginUpdates()
@@ -206,6 +218,7 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
+        fetchRequestController = controller
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
@@ -290,6 +303,45 @@ class MainContactsViewController: UIViewController, UITableViewDelegate, UITable
         let pvc = PersonalViewController.detailViewControllerForProduct(selectedPerson)
         pvc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(pvc, animated: true)
+    }
+    
+    // MARK: - Segmented Control
+    
+    @IBAction func localServerSwitch(sender: UISegmentedControl) {
+        let index = sender.selectedSegmentIndex
+        switch (index) {
+        case 0:
+            fetchRequestController = backfrc!
+        case 1:
+            updateFetchRequestController()
+        default:
+            break
+        }
+        indexView.refreshIndexItems()
+        tableView.reloadData()
+    }
+    
+
+    func updateFetchRequestController() {
+        let fetchRequest = NSFetchRequest(entityName: "Contacts")
+        let sd = NSSortDescriptor(key: "personNameFirstLetter", ascending: true)
+        fetchRequest.sortDescriptors = [sd]
+        
+        let predicate = NSPredicate(format: "isUpdate == %@", true)
+        fetchRequest.predicate = predicate
+        
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack.context
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "personNameFirstLetter", cacheName: nil)
+        backfrc = fetchRequestController
+        fetchRequestController = frc
+        fetchRequestController.delegate = self
+        
+        do {
+            try fetchRequestController.performFetch()
+        }
+        catch {
+            print(error)
+        }
     }
     
     

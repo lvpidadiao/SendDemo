@@ -28,6 +28,20 @@ extension UIColor {
     
 }
 
+extension String {
+    func makeChinesePhonetic() -> String {
+        let mutableString = NSMutableString(string: self)
+        CFStringTransform(mutableString, nil, kCFStringTransformMandarinLatin, false)
+        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
+        let pinyin = mutableString as String
+        return pinyin
+    }
+    
+    func escapeWhiteSpace() -> String {
+        return self.stringByReplacingOccurrencesOfString(" ", withString: "")
+    }
+    
+}
 
 
 class ContactsManipulater {
@@ -92,21 +106,15 @@ class ContactsManipulater {
         return properties
     }
     
-    func getStringFirstLetter(s: String) -> String {
-        let mutableString = NSMutableString(string: s)
-        CFStringTransform(mutableString, nil, kCFStringTransformMandarinLatin, false)
-        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
-        let pinyin = mutableString as String
-        
-        return pinyin.substringWithRange(pinyin.startIndex...pinyin.startIndex).uppercaseString
-    }
-    
     func insertNewContactsToCoreData(contact: CNContact) {
         let person = NSEntityDescription.insertNewObjectForEntityForName("Contacts", inManagedObjectContext: coreDataStack.context) as! Contacts
-        person.name = CNContactFormatter.stringFromContact(contact, style: .FullName)
+        let name = CNContactFormatter.stringFromContact(contact, style: .FullName)
+        person.name = name
+        let phonetic = name?.makeChinesePhonetic()
+        person.phoneticName = phonetic
+        person.personNameFirstLetter = phonetic!.substringWithRange(phonetic!.startIndex...phonetic!.startIndex).uppercaseString
         person.isUpdate = false
         person.isBusy = false
-        person.personNameFirstLetter = getStringFirstLetter(person.name)
         person.identifier = contact.identifier
         
         coreDataStack.saveContext()

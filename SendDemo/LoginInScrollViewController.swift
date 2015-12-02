@@ -163,7 +163,9 @@ class LoginInScrollViewController: UIViewController, UITextFieldDelegate {
         
         for contact in allContacts {
             let personName = CNContactFormatter.stringFromContact(contact, style: .FullName)
+            let phonetic = personName?.makeChinesePhonetic()
             print("the person name is \(personName!)")
+            print("phenoetic name is \(phonetic)")
             print("which identifier is \(contact.identifier)")
             var phoneNumber:String? = nil
             
@@ -181,10 +183,17 @@ class LoginInScrollViewController: UIViewController, UITextFieldDelegate {
             if contact.isKeyAvailable(CNContactImageDataKey) {
                 people.portrait = contact.imageData
             }
+
             people.name = personName
+            people.phoneticName = phonetic
             people.isUpdate = false
             people.isBusy = false
-            people.personNameFirstLetter = getStringFirstLetter(personName!)
+            if phonetic != nil {
+                people.personNameFirstLetter = phonetic!.substringWithRange(phonetic!.startIndex...phonetic!.startIndex).uppercaseString
+                if people.personNameFirstLetter == "A" {
+                    people.isUpdate = true
+                }
+            }
             people.identifier = contact.identifier
             
             do {
@@ -199,17 +208,6 @@ class LoginInScrollViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    
-    func getStringFirstLetter(s: String) -> String {
-        let mutableString = NSMutableString(string: s)
-        CFStringTransform(mutableString, nil, kCFStringTransformMandarinLatin, false)
-        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
-        let pinyin = mutableString as String
-        
-        return pinyin.substringWithRange(pinyin.startIndex...pinyin.startIndex).uppercaseString
-    }
-    
-    
     func promptForAddressBookRequestAccess(){
         store.requestAccessForEntityType(.Contacts) { (granted, error) -> Void in
             dispatch_async(dispatch_get_main_queue()){ () -> Void in
@@ -218,15 +216,17 @@ class LoginInScrollViewController: UIViewController, UITextFieldDelegate {
                     self.displayCantAccessContactAlert()
                 }
                 else {
-                    self.readContactFromAddressBookAndSave()
-                    print("Just authorized")
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
+                        self.readContactFromAddressBookAndSave()
+                        print("Just authorized")
+                    }
                 }
             }
         }
     }
     
     func displayCantAccessContactAlert() {
-        let cantAccessContactAlert = UIAlertController(title: "Cann't Access AddressBook", message: "获取通讯录许可方可访问", preferredStyle: .Alert)
+        let cantAccessContactAlert = UIAlertController(title: "通讯录不让访问啊", message: "获取通讯录许可方可访问", preferredStyle: .Alert)
         cantAccessContactAlert.addAction(UIAlertAction(title: "Change Settings", style: .Default, handler: {action in
             self.openSettings()
         }))

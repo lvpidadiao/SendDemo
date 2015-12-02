@@ -23,18 +23,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-
         // Programatically set the initial view controller using Storyboards
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainTabController = mainStoryboard.instantiateViewControllerWithIdentifier("MainTabEntry")
-        currentVC = mainTabController
-        self.window?.rootViewController = mainTabController
-        self.window?.makeKeyAndVisible()
+//        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let mainTabController = mainStoryboard.instantiateViewControllerWithIdentifier("MainTabEntry")
+//        currentVC = mainTabController
+//        self.window?.rootViewController = mainTabController
+//        self.window?.makeKeyAndVisible()
         
         // 当通讯录变更时获取通知
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactChanged:", name: CNContactStoreDidChangeNotification, object: nil)
-        LoginManager.loginForSessionToken(currentVC!)
         
         // test reachability
         reach = Reachability.reachabilityForInternetConnection()
@@ -68,6 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let comparedContact = contactFromCoreData {
                     if comparedContact.name != personName{
                         comparedContact.name = personName
+                        let phonetic = personName?.makeChinesePhonetic()
+                        comparedContact.phoneticName = phonetic
+                        comparedContact.personNameFirstLetter = phonetic!.substringWithRange(phonetic!.startIndex...phonetic!.startIndex).uppercaseString
                     }
                     if comparedContact.portrait !== contact.imageData{
                         comparedContact.portrait = contact.imageData
@@ -84,12 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                     if comparedContact.phoneNumber  != phoneNumber {
                         comparedContact.phoneNumber = phoneNumber
-
-                    }
-                    
-                    if comparedContact.personNameFirstLetter != contactManipulator.getStringFirstLetter(comparedContact.name){
-                        comparedContact.personNameFirstLetter = contactManipulator.getStringFirstLetter(comparedContact.name)
-
                     }
                 }
                 else {
@@ -148,8 +143,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         coreDataStack.saveContext()
     }
     
-    
-
 
 }
 

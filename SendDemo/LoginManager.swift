@@ -44,6 +44,7 @@ class LoginManager {
     class func loginForSessionToken(VC: UIViewController)
     {
         let defautls = NSUserDefaults.standardUserDefaults()
+        let vc = getCurrentViewController()
         if let sessionToken = defautls.objectForKey(UserDefaultsKeys.SessionTokenKey){
             let requestBody = ["sessionToken":sessionToken]
             Alamofire.request(.POST, URLForServer.LoginURL, parameters: requestBody, encoding: .JSON).responseJSON { (response) -> Void in
@@ -54,24 +55,24 @@ class LoginManager {
                     print("error code is : \(code), error is \(error)")
                     dispatch_async(dispatch_get_main_queue()){
                         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Login")
-                        VC.presentViewController(viewController, animated: true, completion: nil)
+                        vc?.presentViewController(viewController, animated: true, completion: nil)
                     }
                 }
-                else
-                {
-                    if  !VC.isKindOfClass(MainContactsViewController) {
-                        dispatch_async(dispatch_get_main_queue()){
-                            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MainTabEntry")
-                            VC.presentViewController(vc, animated: true, completion: nil)
-                        }
-                    }
-                }
+//                else
+//                {
+//                    if  ((vc?.isKindOfClass(MainContactsViewController)) == false) {
+//                        dispatch_async(dispatch_get_main_queue()){
+//                            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ContactsTab")
+//                            VC.presentViewController(vc, animated: true, completion: nil)
+//                        }
+//                    }
+//                }
             }
         }
         else {
             let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Login")
         
-            VC.presentViewController(viewController, animated: false, completion: nil)
+            vc?.presentViewController(viewController, animated: true, completion: nil)
 
         }
     }

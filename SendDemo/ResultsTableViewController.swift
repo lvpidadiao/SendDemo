@@ -9,19 +9,7 @@
 import UIKit
 import CoreData
 
-extension String {
-    func makeChinesePheotic() -> String {
-        let mutableString = NSMutableString(string: self)
-        CFStringTransform(mutableString, nil, kCFStringTransformMandarinLatin, false)
-        CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
-        let pinyin = mutableString as String
-        return pinyin
-    }
-    
-    func escapeWhiteSpace() -> String {
-        return self.stringByReplacingOccurrencesOfString(" ", withString: "")
-    }
-}
+
 
 class ResultsTableViewController: UITableViewController,NSFetchedResultsControllerDelegate, UISearchBarDelegate,UISearchResultsUpdating, UISearchControllerDelegate
 {
@@ -95,6 +83,11 @@ class ResultsTableViewController: UITableViewController,NSFetchedResultsControll
             let nameSearchComparisonPredicate = NSComparisonPredicate(leftExpression: nameExpression, rightExpression: searchStringExpression, modifier: .DirectPredicateModifier, type: .ContainsPredicateOperatorType, options: .CaseInsensitivePredicateOption)
             
             searchItemsPredicate.append(nameSearchComparisonPredicate)
+            
+            let phoneticExpression = NSExpression(forKeyPath: "phoneticName")
+            let phoneticscp = NSComparisonPredicate(leftExpression: phoneticExpression, rightExpression: searchStringExpression, modifier: .DirectPredicateModifier, type: .ContainsPredicateOperatorType, options: .CaseInsensitivePredicateOption)
+            
+            searchItemsPredicate.append(phoneticscp)
             
             // this below code is for compare Int value not String
 //            let numberFormatter = NSNumberFormatter()

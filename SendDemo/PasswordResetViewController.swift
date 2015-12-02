@@ -22,11 +22,20 @@ class PasswordResetViewController: UIViewController {
     }
     
     @IBAction func requestForPasswordReset(sender: UIButton) {
-        let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
-        spinner.startAnimating()
-        self.view.addSubview(spinner)
-        let reqBody = ["email": emailTextField.text!]
-        LoginManager.passwordResetForHTTP(self, requestBody: reqBody, spinner: spinner)
+        let email = emailTextField?.text
+
+        if  ((email?.containsString("@")) == false) {
+            let errAlert = UIAlertController(title: "请求格式不正确", message: "请输入正确email", preferredStyle: .Alert)
+            errAlert.addAction(UIAlertAction(title: "重写", style: .Cancel, handler: nil))
+            self.presentViewController(errAlert, animated: true, completion: nil)
+            return
+        }
+        else {
+            let spinner = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+            spinner.startAnimating()
+            self.view.addSubview(spinner)
+            let reqBody = ["email": emailTextField.text!]
+            LoginManager.passwordResetForHTTP(self, requestBody: reqBody, spinner: spinner)
+        }
     }
-    
 }
